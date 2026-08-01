@@ -1,0 +1,49 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Site4Voter.master.cs" Inherits="EVotingSystem.Site4Voter" %>
+
+<!DOCTYPE html>
+
+<html>
+<head runat="server">
+    <title></title>
+    <asp:ContentPlaceHolder ID="head" runat="server">
+    </asp:ContentPlaceHolder>
+    <style type="text/css">
+
+        .auto-style2 {
+            font-size: xx-large;
+        }
+        .auto-style1 {
+            font-size: x-large;
+        }
+        .auto-style3 {
+            font-size: large;
+        }
+    </style>
+</head>
+<body>
+    <form id="form1" runat="server"><center>
+        <div>
+            <br />
+            <span class="auto-style2"><strong>E - Voting System</strong></span><br />
+            <span class="auto-style1"><strong>
+            <br />
+            Voters Portal<br />
+&nbsp;</strong></span><br />
+            <strong>
+            <asp:HyperLink ID="HyperLink1" runat="server" CssClass="auto-style3" NavigateUrl="~/VoterDashboard.aspx">Dashboard</asp:HyperLink>
+            <span class="auto-style3">&nbsp;&nbsp;&nbsp;&nbsp; </span>
+            <asp:HyperLink ID="HyperLink2" runat="server" CssClass="auto-style3" NavigateUrl="~/PartyListVoter.aspx">Party List</asp:HyperLink>
+            <span class="auto-style3">&nbsp;&nbsp;&nbsp; </span>
+            <asp:HyperLink ID="HyperLink3" runat="server" CssClass="auto-style3">Vote</asp:HyperLink>
+            <span class="auto-style3">&nbsp;&nbsp;&nbsp; </span>
+            <asp:HyperLink ID="HyperLink4" runat="server" CssClass="auto-style3">My Status</asp:HyperLink>
+            <span class="auto-style3">&nbsp;&nbsp;&nbsp;
+            <asp:HyperLink ID="HyperLink5" runat="server">Result</asp:HyperLink>
+&nbsp;&nbsp;&nbsp;
+            <asp:HyperLink ID="HyperLink6" runat="server" NavigateUrl="~/Logout.aspx">Logout</asp:HyperLink>
+&nbsp;&nbsp; </span></strong>&nbsp;<asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
+            </asp:ContentPlaceHolder>
+        </div></center>
+    </form>
+</body>
+</html>

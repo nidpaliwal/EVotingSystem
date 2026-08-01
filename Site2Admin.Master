@@ -1,0 +1,53 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Site2Admin.master.cs" Inherits="EVotingSystem.Site2Admin" %>
+
+<!DOCTYPE html>
+
+<html>
+<head runat="server">
+    <title></title>
+    <asp:ContentPlaceHolder ID="head" runat="server">
+    </asp:ContentPlaceHolder>
+    <style type="text/css">
+        .auto-style1 {
+            font-size: xx-large;
+        }
+        .auto-style2 {
+            font-size: large;
+        }
+        .auto-style3 {
+            font-size: x-large;
+        }
+    </style>
+</head>
+<body>
+    <form id="form1" runat="server"><center>
+        <div>
+            <span class="auto-style1"><strong>E - Voting System</strong></span><span class="auto-style3"><strong><br />
+            <br />
+            Admin Portal<br />
+&nbsp;</strong></span><br />
+            <strong>
+            <asp:HyperLink ID="HyperLink1" runat="server" CssClass="auto-style2" NavigateUrl="~/AdminDashboard.aspx">Dashboard</asp:HyperLink>
+            </strong><span class="auto-style2"><strong>&nbsp;&nbsp;&nbsp;
+            </strong></span><strong>
+            <asp:HyperLink ID="HyperLink2" runat="server" CssClass="auto-style2" NavigateUrl="~/ManageParties.aspx">Manage Parties</asp:HyperLink>
+            </strong><span class="auto-style2"><strong>&nbsp;&nbsp;&nbsp;
+            </strong></span><strong>
+            <asp:HyperLink ID="HyperLink3" runat="server" CssClass="auto-style2" NavigateUrl="~/ManageVoters.aspx">Manage Voters</asp:HyperLink>
+            </strong><span class="auto-style2"><strong>&nbsp;&nbsp;&nbsp;
+            </strong></span><strong>
+            <asp:HyperLink ID="HyperLink4" runat="server" CssClass="auto-style2" NavigateUrl="~/ElectionControl.aspx">Election Control</asp:HyperLink>
+            </strong><span class="auto-style2"><strong>&nbsp;&nbsp;&nbsp;
+            </strong></span><strong>
+            <asp:HyperLink ID="HyperLink5" runat="server" CssClass="auto-style2" NavigateUrl="~/Result.aspx">Result</asp:HyperLink>
+            </strong><span class="auto-style2"><strong>&nbsp;&nbsp;&nbsp;
+            <asp:HyperLink ID="HyperLink6" runat="server" NavigateUrl="~/Logout.aspx">Logout</asp:HyperLink>
+&nbsp;&nbsp;&nbsp;
+            </strong></span>
+            <br />
+            <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
+            </asp:ContentPlaceHolder>
+        </div></center>
+    </form>
+</body>
+</html>

@@ -1,0 +1,30 @@
+## Visual Studio / ASP.NET
+.vs/
+.vscode/
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+*.cache
+*.pdb
+*.log
+*.bak
+
+## Build output
+[Bb]in/
+[Oo]bj/
+packages/
+TestResults/
+
+## Publish / deployment
+*.pubxml
+*.pubxml.user
+*.publish.xml
+
+## Local uploads and runtime data
+Uploads/
+App_Data/
+
+## OS generated files
+.DS_Store
+Thumbs.db

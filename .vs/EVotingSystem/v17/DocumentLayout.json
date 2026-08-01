@@ -1,0 +1,177 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\Lenovo\\source\\repos\\EVotingSystem\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{214302E4-9480-4594-8CDB-4C0FEF954CF4}|EVotingSystem.csproj|c:\\users\\lenovo\\source\\repos\\evotingsystem\\registervoter.aspx||{57312C73-6202-49E9-B1E1-40EA1A6DC1F6}",
+      "RelativeMoniker": "D:0:0:{214302E4-9480-4594-8CDB-4C0FEF954CF4}|EVotingSystem.csproj|solutionrelative:registervoter.aspx||{57312C73-6202-49E9-B1E1-40EA1A6DC1F6}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{214302E4-9480-4594-8CDB-4C0FEF954CF4}|EVotingSystem.csproj|C:\\Users\\Lenovo\\source\\repos\\EVotingSystem\\registervoter.aspx.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{214302E4-9480-4594-8CDB-4C0FEF954CF4}|EVotingSystem.csproj|solutionrelative:registervoter.aspx.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{214302E4-9480-4594-8CDB-4C0FEF954CF4}|EVotingSystem.csproj|C:\\Users\\Lenovo\\source\\repos\\EVotingSystem\\login.aspx||{57312C73-6202-49E9-B1E1-40EA1A6DC1F6}",
+      "RelativeMoniker": "D:0:0:{214302E4-9480-4594-8CDB-4C0FEF954CF4}|EVotingSystem.csproj|solutionrelative:login.aspx||{57312C73-6202-49E9-B1E1-40EA1A6DC1F6}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{214302E4-9480-4594-8CDB-4C0FEF954CF4}|EVotingSystem.csproj|C:\\Users\\Lenovo\\source\\repos\\EVotingSystem\\login.aspx.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{214302E4-9480-4594-8CDB-4C0FEF954CF4}|EVotingSystem.csproj|solutionrelative:login.aspx.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{214302E4-9480-4594-8CDB-4C0FEF954CF4}|EVotingSystem.csproj|C:\\Users\\Lenovo\\source\\repos\\EVotingSystem\\registerchoice.aspx||{57312C73-6202-49E9-B1E1-40EA1A6DC1F6}",
+      "RelativeMoniker": "D:0:0:{214302E4-9480-4594-8CDB-4C0FEF954CF4}|EVotingSystem.csproj|solutionrelative:registerchoice.aspx||{57312C73-6202-49E9-B1E1-40EA1A6DC1F6}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{214302E4-9480-4594-8CDB-4C0FEF954CF4}|EVotingSystem.csproj|C:\\Users\\Lenovo\\source\\repos\\EVotingSystem\\site4voter.master||{B30AFBFF-D992-43B7-B62D-2642580A2883}",
+      "RelativeMoniker": "D:0:0:{214302E4-9480-4594-8CDB-4C0FEF954CF4}|EVotingSystem.csproj|solutionrelative:site4voter.master||{B30AFBFF-D992-43B7-B62D-2642580A2883}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{214302E4-9480-4594-8CDB-4C0FEF954CF4}|EVotingSystem.csproj|C:\\Users\\Lenovo\\source\\repos\\EVotingSystem\\site2admin.master||{B30AFBFF-D992-43B7-B62D-2642580A2883}",
+      "RelativeMoniker": "D:0:0:{214302E4-9480-4594-8CDB-4C0FEF954CF4}|EVotingSystem.csproj|solutionrelative:site2admin.master||{B30AFBFF-D992-43B7-B62D-2642580A2883}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{214302E4-9480-4594-8CDB-4C0FEF954CF4}|EVotingSystem.csproj|C:\\Users\\Lenovo\\source\\repos\\EVotingSystem\\site1.master||{B30AFBFF-D992-43B7-B62D-2642580A2883}",
+      "RelativeMoniker": "D:0:0:{214302E4-9480-4594-8CDB-4C0FEF954CF4}|EVotingSystem.csproj|solutionrelative:site1.master||{B30AFBFF-D992-43B7-B62D-2642580A2883}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{214302E4-9480-4594-8CDB-4C0FEF954CF4}|EVotingSystem.csproj|C:\\Users\\Lenovo\\source\\repos\\EVotingSystem\\site3party.master||{B30AFBFF-D992-43B7-B62D-2642580A2883}",
+      "RelativeMoniker": "D:0:0:{214302E4-9480-4594-8CDB-4C0FEF954CF4}|EVotingSystem.csproj|solutionrelative:site3party.master||{B30AFBFF-D992-43B7-B62D-2642580A2883}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 1,
+          "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{cce594b6-0c39-4442-ba28-10c64ac7e89f}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "RegisterVoter.aspx",
+              "DocumentMoniker": "C:\\Users\\Lenovo\\source\\repos\\EVotingSystem\\RegisterVoter.aspx",
+              "RelativeDocumentMoniker": "RegisterVoter.aspx",
+              "ToolTip": "C:\\Users\\Lenovo\\source\\repos\\EVotingSystem\\RegisterVoter.aspx",
+              "RelativeToolTip": "RegisterVoter.aspx",
+              "LogicalView": "7651a703-06e5-11d1-8ebd-00a0c90f26ea",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000195|",
+              "WhenOpened": "2026-07-24T14:43:42.983Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "RegisterVoter.aspx.cs",
+              "DocumentMoniker": "C:\\Users\\Lenovo\\source\\repos\\EVotingSystem\\RegisterVoter.aspx.cs",
+              "RelativeDocumentMoniker": "RegisterVoter.aspx.cs",
+              "ToolTip": "C:\\Users\\Lenovo\\source\\repos\\EVotingSystem\\RegisterVoter.aspx.cs",
+              "RelativeToolTip": "RegisterVoter.aspx.cs",
+              "ViewState": "AgIAAGoAAAAAAAAAAAAswHwAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-07-24T14:43:38.833Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "Login.aspx",
+              "DocumentMoniker": "C:\\Users\\Lenovo\\source\\repos\\EVotingSystem\\Login.aspx",
+              "RelativeDocumentMoniker": "Login.aspx",
+              "ToolTip": "C:\\Users\\Lenovo\\source\\repos\\EVotingSystem\\Login.aspx",
+              "RelativeToolTip": "Login.aspx",
+              "LogicalView": "7651a703-06e5-11d1-8ebd-00a0c90f26ea",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000195|",
+              "WhenOpened": "2026-07-21T13:28:41.712Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "Login.aspx.cs",
+              "DocumentMoniker": "C:\\Users\\Lenovo\\source\\repos\\EVotingSystem\\Login.aspx.cs",
+              "RelativeDocumentMoniker": "Login.aspx.cs",
+              "ToolTip": "C:\\Users\\Lenovo\\source\\repos\\EVotingSystem\\Login.aspx.cs",
+              "RelativeToolTip": "Login.aspx.cs",
+              "ViewState": "AgIAABUAAAAAAAAAAAAowBsAAAArAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-07-23T10:21:00.047Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "RegisterChoice.aspx",
+              "DocumentMoniker": "C:\\Users\\Lenovo\\source\\repos\\EVotingSystem\\RegisterChoice.aspx",
+              "RelativeDocumentMoniker": "RegisterChoice.aspx",
+              "ToolTip": "C:\\Users\\Lenovo\\source\\repos\\EVotingSystem\\RegisterChoice.aspx",
+              "RelativeToolTip": "RegisterChoice.aspx",
+              "LogicalView": "7651a703-06e5-11d1-8ebd-00a0c90f26ea",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000195|",
+              "WhenOpened": "2026-07-24T14:42:46.44Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "Site4Voter.Master",
+              "DocumentMoniker": "C:\\Users\\Lenovo\\source\\repos\\EVotingSystem\\Site4Voter.Master",
+              "RelativeDocumentMoniker": "Site4Voter.Master",
+              "ToolTip": "C:\\Users\\Lenovo\\source\\repos\\EVotingSystem\\Site4Voter.Master",
+              "RelativeToolTip": "Site4Voter.Master",
+              "LogicalView": "7651a703-06e5-11d1-8ebd-00a0c90f26ea",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000195|",
+              "WhenOpened": "2026-07-21T13:07:19.869Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "Site3Party.Master",
+              "DocumentMoniker": "C:\\Users\\Lenovo\\source\\repos\\EVotingSystem\\Site3Party.Master",
+              "RelativeDocumentMoniker": "Site3Party.Master",
+              "ToolTip": "C:\\Users\\Lenovo\\source\\repos\\EVotingSystem\\Site3Party.Master",
+              "RelativeToolTip": "Site3Party.Master",
+              "LogicalView": "7651a703-06e5-11d1-8ebd-00a0c90f26ea",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000195|",
+              "WhenOpened": "2026-07-21T13:04:14.497Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "Site2Admin.Master",
+              "DocumentMoniker": "C:\\Users\\Lenovo\\source\\repos\\EVotingSystem\\Site2Admin.Master",
+              "RelativeDocumentMoniker": "Site2Admin.Master",
+              "ToolTip": "C:\\Users\\Lenovo\\source\\repos\\EVotingSystem\\Site2Admin.Master",
+              "RelativeToolTip": "Site2Admin.Master",
+              "LogicalView": "7651a703-06e5-11d1-8ebd-00a0c90f26ea",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000195|",
+              "WhenOpened": "2026-07-21T12:53:48.098Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "Site1.Master",
+              "DocumentMoniker": "C:\\Users\\Lenovo\\source\\repos\\EVotingSystem\\Site1.Master",
+              "RelativeDocumentMoniker": "Site1.Master",
+              "ToolTip": "C:\\Users\\Lenovo\\source\\repos\\EVotingSystem\\Site1.Master",
+              "RelativeToolTip": "Site1.Master",
+              "LogicalView": "7651a703-06e5-11d1-8ebd-00a0c90f26ea",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000195|",
+              "WhenOpened": "2026-07-20T09:53:23.073Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
