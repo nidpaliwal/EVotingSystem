@@ -26,7 +26,7 @@ namespace EVotingSystem
             }
             if (!IsPostBack)
             {
-                string s = "SELECT PartyID,PartyName,LeaderName,Status,Email,Phone,SymbolImagePath from Party";
+                string s = "SELECT PartyID,PartyName,LeaderName,Status,Email,Phone,SymbolImagePath,Objective,LegalHistory from Party";
                 DataTable dt = new DataTable();
                 dt = obj.GetData(s);
                 if (dt != null)
@@ -44,7 +44,7 @@ namespace EVotingSystem
 
         protected void Button1_Click(object sender, EventArgs e)
         {
-            string s = "SELECT PartyID,PartyName,LeaderName,Status,Email,Phone,SymbolImagePath from Party where PartyName like @Search or CAST(PartyId as varchar) like @Search";
+            string s = "SELECT PartyID,PartyName,LeaderName,Status,Email,Phone,SymbolImagePath,Objective,LegalHistory from Party where PartyName like @Search or CAST(PartyId as varchar) like @Search";
             DataTable dt = obj.GetData(s, new SqlParameter("@Search", "%" + TextBox1.Text + "%"));
             if (dt != null)
             {

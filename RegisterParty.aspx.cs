@@ -101,7 +101,7 @@ namespace EVotingSystem
 
 
 
-                        string s = "INSERT INTO Party(PartyName,SymbolImagePath,LeaderName,LeaderPhotoPath,Objective,Email,PasswordHash,Phone) VALUES(@PartyName,@SymbolImagePath,@LeaderName,@LeaderPhotoPath,@Objective,@Email,@PasswordHash,@Phone)";
+                        string s = "INSERT INTO Party(PartyName,SymbolImagePath,LeaderName,LeaderPhotoPath,Objective,LegalHistory,Email,PasswordHash,Phone) VALUES(@PartyName,@SymbolImagePath,@LeaderName,@LeaderPhotoPath,@Objective,@LegalHistory,@Email,@PasswordHash,@Phone)";
                         try
                         {
                             obj.SetData(s,
@@ -110,6 +110,7 @@ namespace EVotingSystem
                             new SqlParameter("@LeaderName", TextBox2.Text),
                             new SqlParameter("@LeaderPhotoPath", leaderPhotoPath),
                             new SqlParameter("@Objective", TextBox3.Text),
+                            new SqlParameter("@LegalHistory", TextBox4.Text),
                             new SqlParameter("@Email", TextBox5.Text),
                             new SqlParameter("@PasswordHash", PasswordHelper.HashPassword(TextBox6.Text)),
                             new SqlParameter("@Phone", TextBox7.Text));

@@ -20,6 +20,16 @@
                     <asp:BoundField DataField="LeaderName" HeaderText="Leader Name" />
                     <asp:BoundField DataField="Email" HeaderText="Email" />
                     <asp:BoundField DataField="Phone" HeaderText="Phone" />
+                    <asp:TemplateField HeaderText="Objective">
+                        <ItemTemplate>
+                            <div class="cell-long" title='<%# Eval("Objective") %>'><%# Eval("Objective") %></div>
+                        </ItemTemplate>
+                    </asp:TemplateField>
+                    <asp:TemplateField HeaderText="Legal History">
+                        <ItemTemplate>
+                            <div class="cell-long" title='<%# Eval("LegalHistory") %>'><%# Eval("LegalHistory") %></div>
+                        </ItemTemplate>
+                    </asp:TemplateField>
                     <asp:TemplateField HeaderText="Status">
                         <ItemTemplate>
                             <span class="status-badge"><%# Eval("Status") %></span>

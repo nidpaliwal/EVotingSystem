@@ -295,17 +295,18 @@ input[type="file"] {
 input[type="submit"],
 input[type="button"] {
     display: inline-block;
-    background: var(--accent);
     color: #fff;
+    background: var(--accent);
     border: 1px solid var(--accent);
     border-radius: 6px;
     padding: 9px 20px;
     font-size: 14px;
-    font-weight: 600;
+    font-weight: 700;
     font-family: inherit;
     cursor: pointer;
     text-decoration: none;
     transition: background .15s, border-color .15s;
+    text-align: center;
 }
 
 .btn:hover, input[type="submit"]:hover, input[type="button"]:hover {
@@ -386,6 +387,13 @@ table th { background: #f4f6fa; font-weight: 600; color: #343e52; }
 
 .GridViewStyle tr:nth-child(even) td { background: #f7f9fc; }
 .GridViewStyle tr:hover td { background: #eef3fb; }
+
+.cell-long {
+    max-width: 260px;
+    max-height: 64px;
+    overflow: hidden;
+    line-height: 1.4;
+}
 
 .GridViewStyle .btn { padding: 6px 12px; font-size: 13px; margin: 2px 0; }
 

@@ -46,7 +46,7 @@
         </div>
         <p class="form-note">Photos must be .jpg, .jpeg, .png or .gif images up to 5 MB.</p>
         <div class="form-actions">
-            <asp:Button ID="Button1" runat="server" Text="Register" OnClick="Button1_Click" CssClass="btn" />
+            <asp:Button ID="Button1" runat="server" Text="Register" OnClick="Button1_Click" CssClass="btn btn-lg" />
         </div>
     </div>
 </asp:Content>
