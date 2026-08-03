@@ -19,9 +19,9 @@
             <asp:TextBox ID="TextBox1" runat="server" TextMode="Email" MaxLength="100"></asp:TextBox>
 
             <label for="TextBox2">Password</label>
-            <div style="display: flex; gap: 8px; align-items: center; max-width: 460px; width: 100%;">
-                <asp:TextBox ID="TextBox2" runat="server" TextMode="Password" ClientIDMode="Static" MaxLength="128" style="flex: 1;"></asp:TextBox>
-                <asp:ImageButton ID="ImageButton1" runat="server" Height="20px" ImageUrl="~/Images/hide.png" OnClientClick="togglePassword(); return false;" style="width: 20px;" OnClick="ImageButton1_Click" ToolTip="Show / hide password" />
+            <div class="login-password">
+                <asp:TextBox ID="TextBox2" runat="server" TextMode="Password" ClientIDMode="Static" MaxLength="128"></asp:TextBox>
+                <asp:ImageButton ID="ImageButton1" runat="server" CssClass="password-toggle" ImageUrl="~/Images/hide.png" OnClientClick="togglePassword(); return false;" OnClick="ImageButton1_Click" ToolTip="Show / hide password" />
             </div>
         </div>
         <asp:Label ID="lblLocked" runat="server" CssClass="lockout-banner" Visible="false"
