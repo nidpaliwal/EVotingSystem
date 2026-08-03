@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
@@ -11,7 +12,8 @@ namespace EVotingSystem
     {
         SqlConnection con;
         public Datacon() {
-            con = new SqlConnection(@"Data Source=LAPTOP-HKGA59LC\SQLEXPRESS;Initial Catalog=EVotingDB;Integrated Security=True;");
+            string cs = ConfigurationManager.ConnectionStrings["EVotingDB"].ConnectionString;
+            con = new SqlConnection(cs);
         }
 
         // Method to retrieve data (SELECT).

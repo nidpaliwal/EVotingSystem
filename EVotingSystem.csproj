@@ -70,6 +70,7 @@
     <Content Include="AdminDashboard.aspx" />
     <Content Include="AdminElectionHistory.aspx" />
     <Content Include="ElectionControl.aspx" />
+    <Content Include="Error.aspx" />
     <Content Include="Images\hide.png" />
     <Content Include="Login.aspx" />
     <Content Include="Logout.aspx" />
@@ -115,6 +116,13 @@
     <Compile Include="Datacon.cs" />
     <Compile Include="LoginGuard.cs" />
     <Compile Include="UploadHelper.cs" />
+    <Compile Include="Error.aspx.cs">
+      <DependentUpon>Error.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Error.aspx.designer.cs">
+      <DependentUpon>Error.aspx</DependentUpon>
+    </Compile>
     <Compile Include="ElectionControl.aspx.cs">
       <DependentUpon>ElectionControl.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
