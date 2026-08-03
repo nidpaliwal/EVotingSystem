@@ -90,7 +90,6 @@
     <Content Include="ResultParty.aspx" />
     <Content Include="ResultPublic.aspx" />
     <Content Include="ResultVoter.aspx" />
-    <Content Include="StyleSheet1.css" />
     <Content Include="Styles\site.css" />
     <Content Include="VoterDashboard.aspx" />
     <Content Include="VoterElectionHistory.aspx" />
@@ -378,4 +377,5 @@
   </Target>
   -->
 </Project>
+
 

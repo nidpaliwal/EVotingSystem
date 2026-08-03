@@ -4,9 +4,9 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <h2 class="page-title">Manage Voters</h2>
     <div class="card">
-        <div style="display: flex; gap: 10px; flex-wrap: wrap; align-items: center;">
+        <div class="search-row">
             <asp:Label ID="Label1" runat="server" Text="Enter Voter Name / ID:"></asp:Label>
-            <asp:TextBox ID="TextBox1" runat="server" style="max-width: 320px;"></asp:TextBox>
+            <asp:TextBox ID="TextBox1" runat="server"></asp:TextBox>
             <asp:Button ID="Button1" runat="server" OnClick="Button1_Click" Text="Search" CssClass="btn" />
         </div>
     </div>
@@ -20,7 +20,11 @@
                     <asp:BoundField DataField="VoterIDNumber" HeaderText="Voter ID Number" />
                     <asp:BoundField DataField="Email" HeaderText="Email" />
                     <asp:BoundField DataField="Phone" HeaderText="Phone" />
-                    <asp:BoundField DataField="Status" HeaderText="Status" />
+                    <asp:TemplateField HeaderText="Status">
+                        <ItemTemplate>
+                            <span class="status-badge"><%# Eval("Status") %></span>
+                        </ItemTemplate>
+                    </asp:TemplateField>
                     <asp:TemplateField HeaderText="Photo">
                         <ItemTemplate>
                             <asp:Image ID="imgPhoto" runat="server" ImageUrl='<%# Eval("PhotoPath") %>' Width="44" Height="44" Style="object-fit: cover; border-radius: 4px;" />

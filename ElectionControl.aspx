@@ -29,7 +29,11 @@
                     <asp:BoundField DataField="Title" HeaderText="Title" />
                     <asp:BoundField DataField="StartDate" HeaderText="Start Date" />
                     <asp:BoundField DataField="EndDate" HeaderText="End Date" />
-                    <asp:BoundField DataField="IsActive" HeaderText="Active" />
+                    <asp:TemplateField HeaderText="Status">
+                        <ItemTemplate>
+                            <span class="status-badge"><%# (bool)Eval("IsActive") ? "Active" : "Inactive" %></span>
+                        </ItemTemplate>
+                    </asp:TemplateField>
                     <asp:TemplateField HeaderText="Action">
                         <ItemTemplate>
                             <asp:TextBox ID="txtNewEndDate" runat="server" TextMode="DateTime" style="max-width: 180px; display: inline-block;"></asp:TextBox>

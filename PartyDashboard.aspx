@@ -6,7 +6,7 @@
     <div class="card">
         <p>Logged in as: <strong><asp:Label ID="lblEmail" runat="server"></asp:Label></strong></p>
     </div>
-    <h3 style="margin: 4px 0 12px; color: var(--navy); font-size: 17px;">Quick actions</h3>
+    <h3 class="section-title">Quick actions</h3>
     <div class="quick-links">
         <a class="quick-link" href="MyProfile.aspx">My Profile<span>View and update your party details</span></a>
         <a class="quick-link" href="PartyStatus.aspx">Registration Status<span>Check approval status of your party</span></a>

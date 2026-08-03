@@ -279,6 +279,16 @@ input[type="file"] {
     font-weight: 700;
 }
 
+.search-row {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    align-items: center;
+}
+
+.search-row label { font-weight: 600; color: #343e52; }
+.search-row input[type="text"] { max-width: 320px; }
+
 /* ============================ Buttons ============================ */
 
 .btn,
