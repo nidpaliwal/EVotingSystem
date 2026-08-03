@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Data.SqlClient;
 using System.Drawing.Drawing2D;
 using System.Linq;
@@ -14,61 +15,85 @@ namespace EVotingSystem
         Datacon obj = new Datacon();
         protected void Page_Load(object sender, EventArgs e)
         {
+            if (IsPostBack)
+            {
+                if (LoginGuard.IsLocked(ClientIp))
+                {
+                    lblLocked.Visible = true;
+                    TextBox1.Enabled = false;
+                    TextBox2.Enabled = false;
+                    Button1.Enabled = false;
+                }
+            }
+        }
 
+        private string ClientIp
+        {
+            get
+            {
+                string ip = Request.UserHostAddress;
+                return string.IsNullOrEmpty(ip) ? "unknown" : ip;
+            }
         }
 
         protected void Button1_Click(object sender, EventArgs e)
         {
+            if (LoginGuard.IsLocked(ClientIp))
+            {
+                lblLocked.Visible = true;
+                TextBox1.Enabled = false;
+                TextBox2.Enabled = false;
+                Button1.Enabled = false;
+                return;
+            }
 
             string email = TextBox1.Text.Trim();
-            string enteredHash = PasswordHelper.HashPassword(TextBox2.Text.Trim());
+            string password = TextBox2.Text.Trim();
 
-            // Step 1: Check Admin
-            string sAdmin = "Select * from Admin where Email=@Email and PasswordHash=@Hash";
-            var dtAdmin = obj.GetData(sAdmin,
-                new SqlParameter("@Email", email),
-                new SqlParameter("@Hash", enteredHash));
-
-            if (dtAdmin.Rows.Count > 0)
+            if (TryLogin("Admin", "Admin", email, password, "AdminDashboard.aspx")
+                || TryLogin("Party", "Party", email, password, "PartyDashboard.aspx")
+                || TryLogin("Voter", "Voter", email, password, "VoterDashboard.aspx"))
             {
-                Session["Role"] = "Admin";
-                Session["Email"] = email;
-                Response.Redirect("AdminDashboard.aspx");
-                return;
+                LoginGuard.Clear(ClientIp);
+                return; // TryLogin already redirected
             }
 
-            // Step 2: Check Party
-            string sParty = "Select * from Party where Email=@Email and PasswordHash=@Hash";
-            var dtParty = obj.GetData(sParty,
-                new SqlParameter("@Email", email),
-                new SqlParameter("@Hash", enteredHash));
-
-            if (dtParty.Rows.Count > 0)
-            {
-                Session["Role"] = "Party";
-                Session["Email"] = email;
-                Response.Redirect("PartyDashboard.aspx");
-            return;
+            LoginGuard.RegisterFailure(ClientIp);
+            ClientScript.RegisterStartupScript(this.GetType(), "alert", "alert('Invalid Email or Password.');", true);
         }
 
-        // Step 3: Check Voter
-        string sVoter = "Select * from Voter where Email=@Email and PasswordHash=@Hash";
-        var dtVoter = obj.GetData(sVoter,
-            new SqlParameter("@Email", email),
-            new SqlParameter("@Hash", enteredHash));
+        /// <summary>
+        /// Attempts to authenticate against one role table. Returns true
+        /// (and redirects) on success; upgrades legacy SHA256 hashes to
+        /// the PBKDF2 format on successful login.
+        /// </summary>
+        private bool TryLogin(string table, string role, string email, string password, string redirectPage)
+        {
+            string query = "SELECT PasswordHash FROM " + table + " WHERE Email=@Email";
+            DataTable dt = obj.GetData(query, new SqlParameter("@Email", email));
 
-            if (dtVoter.Rows.Count > 0)
+            if (dt.Rows.Count == 0)
+                return false;
+
+            string storedHash = dt.Rows[0]["PasswordHash"].ToString();
+
+            if (!PasswordHelper.VerifyPassword(password, storedHash))
+                return false;
+
+            // Successful login: upgrade legacy hash in place
+            if (PasswordHelper.NeedsUpgrade(storedHash))
             {
-                Session["Role"] = "Voter";
-                Session["Email"] = email;
-                Response.Redirect("VoterDashboard.aspx");
-                return;
+                string newHash = PasswordHelper.HashPassword(password);
+                obj.SetData("UPDATE " + table + " SET PasswordHash=@Hash WHERE Email=@Email",
+                    new SqlParameter("@Hash", newHash),
+                    new SqlParameter("@Email", email));
             }
 
-    // No match anywhere
-    ClientScript.RegisterStartupScript(this.GetType(), "alert", "alert('Invalid Email or Password.');", true);
-
-    }
+            Session["Role"] = role;
+            Session["Email"] = email;
+            Response.Redirect(redirectPage);
+            return true;
+        }
 
         protected void ImageButton1_Click(object sender, ImageClickEventArgs e)
         {

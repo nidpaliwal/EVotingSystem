@@ -41,6 +41,8 @@
                 </td>
         </tr>
     </table></center>
+    <asp:Label ID="lblLocked" runat="server" ForeColor="Red" Visible="false"
+        Text="Too many failed login attempts. Please try again after 15 minutes."></asp:Label>
     <br />
     <asp:Button ID="Button1" runat="server" Text="Login" OnClick="Button1_Click" />
 </asp:Content>

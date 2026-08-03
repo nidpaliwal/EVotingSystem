@@ -15,7 +15,73 @@ namespace EVotingSystem
 {
     public static class PasswordHelper
     {
+        private const int Iterations = 100000;
+        private const int SaltSize = 16;
+        private const int HashSize = 32;
+        private const string Prefix = "PBKDF2$";
+
+        /// <summary>
+        /// Hashes a password for storage using salted PBKDF2 (RFC 2898).
+        /// Format: PBKDF2$&lt;iterations&gt;$&lt;saltHex&gt;$&lt;hashHex&gt;
+        /// </summary>
         public static string HashPassword(string password)
+        {
+            byte[] salt = new byte[SaltSize];
+            using (var rng = new RNGCryptoServiceProvider())
+            {
+                rng.GetBytes(salt);
+            }
+            byte[] hash = Derive(password, salt, Iterations);
+            return Prefix + Iterations + "$" + ToHex(salt) + "$" + ToHex(hash);
+        }
+
+        /// <summary>
+        /// Verifies a password against a stored hash. Supports both the
+        /// current PBKDF2 format and legacy unsalted SHA256 hashes.
+        /// </summary>
+        public static bool VerifyPassword(string password, string storedHash)
+        {
+            if (string.IsNullOrEmpty(storedHash) || string.IsNullOrEmpty(password))
+                return false;
+
+            if (storedHash.StartsWith(Prefix))
+            {
+                string[] parts = storedHash.Split('$');
+                if (parts.Length != 4)
+                    return false;
+
+                int iterations;
+                if (!int.TryParse(parts[1], out iterations) || iterations <= 0)
+                    return false;
+
+                byte[] salt;
+                byte[] expected;
+                try
+                {
+                    salt = FromHex(parts[2]);
+                    expected = FromHex(parts[3]);
+                }
+                catch
+                {
+                    return false;
+                }
+
+                byte[] test = Derive(password, salt, iterations);
+                return FixedTimeEquals(test, expected);
+            }
+
+            // Legacy unsalted SHA256 hash (pre-migration accounts)
+            return string.Equals(storedHash, LegacySha256(password), StringComparison.OrdinalIgnoreCase);
+        }
+
+        /// <summary>True if the stored hash uses the old unsalted SHA256 scheme.</summary>
+        public static bool NeedsUpgrade(string storedHash)
+        {
+            return !string.IsNullOrEmpty(storedHash) && !storedHash.StartsWith(Prefix);
+        }
+
+        /// <summary>Legacy unsalted SHA256 (kept only to verify old accounts).</summary>
+        public static string LegacySha256(string password)
         {
             using (SHA256 sha256 = SHA256.Create())
             {
@@ -25,6 +91,38 @@ namespace EVotingSystem
                     builder.Append(b.ToString("x2"));
                 return builder.ToString();
             }
+        }
+
+        private static byte[] Derive(string password, byte[] salt, int iterations)
+        {
+            using (var pbkdf2 = new Rfc2898DeriveBytes(password, salt, iterations))
+            {
+                return pbkdf2.GetBytes(HashSize);
+            }
+        }
+
+        private static string ToHex(byte[] bytes)
+        {
+            StringBuilder sb = new StringBuilder(bytes.Length * 2);
+            foreach (byte b in bytes)
+                sb.Append(b.ToString("x2"));
+            return sb.ToString();
+        }
+
+        private static byte[] FromHex(string hex)
+        {
+            byte[] result = new byte[hex.Length / 2];
+            for (int i = 0; i < result.Length; i++)
+                result[i] = Convert.ToByte(hex.Substring(i * 2, 2), 16);
+            return result;
+        }
+
+        private static bool FixedTimeEquals(byte[] a, byte[] b)
+        {
+            int diff = 0;
+            for (int i = 0; i < a.Length; i++)
+                diff |= a[i] ^ b[i];
+            return diff == 0;
         }
     }
 

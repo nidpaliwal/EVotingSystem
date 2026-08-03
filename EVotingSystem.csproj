@@ -113,6 +113,7 @@
       <DependentUpon>AdminElectionHistory.aspx</DependentUpon>
     </Compile>
     <Compile Include="Datacon.cs" />
+    <Compile Include="LoginGuard.cs" />
     <Compile Include="UploadHelper.cs" />
     <Compile Include="ElectionControl.aspx.cs">
       <DependentUpon>ElectionControl.aspx</DependentUpon>
