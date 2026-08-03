@@ -34,11 +34,11 @@
             <span class="auto-style3">&nbsp;&nbsp;&nbsp;&nbsp; </span>
             <asp:HyperLink ID="HyperLink2" runat="server" CssClass="auto-style3" NavigateUrl="~/PartyListVoter.aspx">Party List</asp:HyperLink>
             <span class="auto-style3">&nbsp;&nbsp;&nbsp; </span>
-            <asp:HyperLink ID="HyperLink3" runat="server" CssClass="auto-style3">Vote</asp:HyperLink>
+            <asp:HyperLink ID="HyperLink3" runat="server" CssClass="auto-style3" NavigateUrl="~/VoterVote.aspx">Vote</asp:HyperLink>
             <span class="auto-style3">&nbsp;&nbsp;&nbsp; </span>
-            <asp:HyperLink ID="HyperLink4" runat="server" CssClass="auto-style3">My Status</asp:HyperLink>
+            <asp:HyperLink ID="HyperLink4" runat="server" CssClass="auto-style3" NavigateUrl="~/VoterStatus.aspx">My Status</asp:HyperLink>
             <span class="auto-style3">&nbsp;&nbsp;&nbsp;
-            <asp:HyperLink ID="HyperLink5" runat="server">Result</asp:HyperLink>
+            <asp:HyperLink ID="HyperLink5" runat="server" NavigateUrl="~/ResultVoter.aspx">Result</asp:HyperLink>
 &nbsp;&nbsp;&nbsp;
             <asp:HyperLink ID="HyperLink6" runat="server" NavigateUrl="~/Logout.aspx">Logout</asp:HyperLink>
 &nbsp;&nbsp; </span></strong>&nbsp;<asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">

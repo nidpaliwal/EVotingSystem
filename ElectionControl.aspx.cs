@@ -66,13 +66,16 @@ namespace EVotingSystem
 
             if (e.CommandName == "Activate")
             {
-                // Deactivate all elections first, so only one is ever active
+                // Deactivate all elections first
                 obj.SetData("UPDATE Election SET IsActive = 0");
 
                 // Activate the selected one
                 obj.SetData("UPDATE Election SET IsActive = 1 WHERE ElectionID = " + electionId);
 
-                ClientScript.RegisterStartupScript(this.GetType(), "alert", "alert('Election activated.');", true);
+                // Fresh voting round — reset everyone's HasVoted for the new election
+                obj.SetData("UPDATE Voter SET HasVoted = 0");
+
+                ClientScript.RegisterStartupScript(this.GetType(), "alert", "alert('Election activated. All voters can now vote fresh.');", true);
             }
             else if (e.CommandName == "Deactivate")
             {

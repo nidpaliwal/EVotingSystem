@@ -28,9 +28,10 @@
             Public Portal<br />
 &nbsp;</strong></span><br />
             <strong>
-            <asp:HyperLink ID="HyperLink1" runat="server" CssClass="auto-style3">Party List</asp:HyperLink>
-            <span class="auto-style3">&nbsp;&nbsp;&nbsp;&nbsp; </span>
-            <asp:HyperLink ID="HyperLink2" runat="server" CssClass="auto-style3">Voters Info</asp:HyperLink>
+            <span class="auto-style1">
+            <asp:HyperLink ID="HyperLink2" runat="server" CssClass="auto-style3" NavigateUrl="~/VoterInfoPublic.aspx">Voters Info</asp:HyperLink>
+            &nbsp;&nbsp; </span>
+            <asp:HyperLink ID="HyperLink1" runat="server" CssClass="auto-style3" NavigateUrl="~/PartyListPublic.aspx">Party List</asp:HyperLink>
             <span class="auto-style3">&nbsp;&nbsp;&nbsp; </span>
             <asp:HyperLink ID="HyperLink3" runat="server" CssClass="auto-style3" NavigateUrl="~/Login.aspx">Login</asp:HyperLink>
             <span class="auto-style3">&nbsp;&nbsp;&nbsp; </span>

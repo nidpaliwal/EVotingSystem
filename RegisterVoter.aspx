@@ -47,7 +47,7 @@
             </td>
         </tr>
         <tr>
-            <td><label>Voter ID Number :</label></td>
+            <td><label>Voter Aadhar ID Number :</label></td>
             <td>
                 <asp:TextBox ID="TextBox4" runat="server"></asp:TextBox>
             </td>

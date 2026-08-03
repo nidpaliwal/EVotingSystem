@@ -22,7 +22,7 @@ function togglePassword() {
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <p style="font-size: large; font-weight: 700">
         Register Party</p>
-    <table class="auto-style4">
+    <table  border="1">
         <tr>
             <td>Party Name :</td>
             <td>

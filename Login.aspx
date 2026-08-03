@@ -25,7 +25,7 @@
         <strong>
         <br class="auto-style1" />
         </strong><span class="auto-style1"><strong>Login</strong></span></p>
-  <center><table class="auto-style4">
+  <center><table border="1">
         <tr>
             <td class="auto-style5">Enter E-mail&nbsp; :</td>
             <td>

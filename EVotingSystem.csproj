@@ -76,13 +76,18 @@
     <Content Include="ManageVoters.aspx" />
     <Content Include="MyProfile.aspx" />
     <Content Include="PartyDashboard.aspx" />
+    <Content Include="PartyListPublic.aspx" />
     <Content Include="PartyListVoter.aspx" />
     <Content Include="PartyStatus.aspx" />
     <Content Include="RegisterChoice.aspx" />
     <Content Include="RegisterParty.aspx" />
     <Content Include="RegisterVoter.aspx" />
-    <Content Include="Result.aspx" />
+    <Content Include="ResultAdmin.aspx" />
+    <Content Include="ResultVoter.aspx" />
     <Content Include="VoterDashboard.aspx" />
+    <Content Include="VoterInfoPublic.aspx" />
+    <Content Include="VoterStatus.aspx" />
+    <Content Include="VoterVote.aspx" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
@@ -143,6 +148,13 @@
     <Compile Include="PartyDashboard.aspx.designer.cs">
       <DependentUpon>PartyDashboard.aspx</DependentUpon>
     </Compile>
+    <Compile Include="PartyListPublic.aspx.cs">
+      <DependentUpon>PartyListPublic.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="PartyListPublic.aspx.designer.cs">
+      <DependentUpon>PartyListPublic.aspx</DependentUpon>
+    </Compile>
     <Compile Include="PartyListVoter.aspx.cs">
       <DependentUpon>PartyListVoter.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -178,12 +190,19 @@
     <Compile Include="RegisterVoter.aspx.designer.cs">
       <DependentUpon>RegisterVoter.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Result.aspx.cs">
-      <DependentUpon>Result.aspx</DependentUpon>
+    <Compile Include="ResultAdmin.aspx.cs">
+      <DependentUpon>ResultAdmin.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Result.aspx.designer.cs">
-      <DependentUpon>Result.aspx</DependentUpon>
+    <Compile Include="ResultAdmin.aspx.designer.cs">
+      <DependentUpon>ResultAdmin.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ResultVoter.aspx.cs">
+      <DependentUpon>ResultVoter.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ResultVoter.aspx.designer.cs">
+      <DependentUpon>ResultVoter.aspx</DependentUpon>
     </Compile>
     <Compile Include="Site1.Master.cs">
       <DependentUpon>Site1.Master</DependentUpon>
@@ -219,6 +238,27 @@
     </Compile>
     <Compile Include="VoterDashboard.aspx.designer.cs">
       <DependentUpon>VoterDashboard.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="VoterInfoPublic.aspx.cs">
+      <DependentUpon>VoterInfoPublic.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="VoterInfoPublic.aspx.designer.cs">
+      <DependentUpon>VoterInfoPublic.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="VoterStatus.aspx.cs">
+      <DependentUpon>VoterStatus.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="VoterStatus.aspx.designer.cs">
+      <DependentUpon>VoterStatus.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="VoterVote.aspx.cs">
+      <DependentUpon>VoterVote.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="VoterVote.aspx.designer.cs">
+      <DependentUpon>VoterVote.aspx</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>

@@ -5,10 +5,12 @@
     <p>
         <br />
         Register as</p>
+    <div>
     <p>
         <asp:Button ID="Button1" runat="server" Text="Register as Voter" OnClick="Button1_Click" />
     </p>
     <p>
         <asp:Button ID="Button2" runat="server" Text="Register as Party" OnClick="Button2_Click1" />
     </p>
+        </div>
 </asp:Content>

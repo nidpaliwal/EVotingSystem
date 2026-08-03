@@ -39,7 +39,7 @@
             <asp:HyperLink ID="HyperLink4" runat="server" CssClass="auto-style2" NavigateUrl="~/ElectionControl.aspx">Election Control</asp:HyperLink>
             </strong><span class="auto-style2"><strong>&nbsp;&nbsp;&nbsp;
             </strong></span><strong>
-            <asp:HyperLink ID="HyperLink5" runat="server" CssClass="auto-style2" NavigateUrl="~/Result.aspx">Result</asp:HyperLink>
+            <asp:HyperLink ID="HyperLink5" runat="server" CssClass="auto-style2" NavigateUrl="~/ResultAdmin.aspx">Result</asp:HyperLink>
             </strong><span class="auto-style2"><strong>&nbsp;&nbsp;&nbsp;
             <asp:HyperLink ID="HyperLink6" runat="server" NavigateUrl="~/Logout.aspx">Logout</asp:HyperLink>
 &nbsp;&nbsp;&nbsp;
