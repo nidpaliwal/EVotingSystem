@@ -12,8 +12,10 @@ namespace EVotingSystem
     {
         SqlConnection con;
         public Datacon() {
-            string cs = ConfigurationManager.ConnectionStrings["EVotingDB"].ConnectionString;
-            con = new SqlConnection(cs);
+            ConnectionStringSettings settings = ConfigurationManager.ConnectionStrings["EVotingDB"];
+            if (settings == null || string.IsNullOrEmpty(settings.ConnectionString))
+                throw new InvalidOperationException("Connection string 'EVotingDB' is missing from Web.config.");
+            con = new SqlConnection(settings.ConnectionString);
         }
 
         // Method to retrieve data (SELECT).

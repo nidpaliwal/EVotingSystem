@@ -121,7 +121,17 @@ namespace EVotingSystem
 
             int voterId = Convert.ToInt32(dtVoter.Rows[0]["VoterID"]);
 
-            string error = obj.CastVote(voterId, partyId);
+            string error;
+            try
+            {
+                error = obj.CastVote(voterId, partyId);
+            }
+            catch (Exception)
+            {
+                ClientScript.RegisterStartupScript(this.GetType(), "alert", "alert('Voting is temporarily unavailable. Please try again.');", true);
+                CheckEligibilityAndLoad();
+                return;
+            }
             if (error != null)
             {
                 ClientScript.RegisterStartupScript(this.GetType(), "alert", "alert('" + error.Replace("'", "\\'") + "');", true);

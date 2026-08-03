@@ -228,16 +228,29 @@ namespace EVotingSystem
                         string photoPath = "~/Uploads/VoterPhotos/" + fileName;
 
                         string s = "insert into Voter(Name,DOB,Gender,Address,VoterIDNumber,Email,PasswordHash,Phone,PhotoPath) values(@Name,@DOB,@Gender,@Address,@VoterIDNumber,@Email,@PasswordHash,@Phone,@PhotoPath)";
-                        obj.SetData(s,
-                            new SqlParameter("@Name", TextBox1.Text),
-                            new SqlParameter("@DOB", dob),
-                            new SqlParameter("@Gender", DropDownList1.SelectedItem.Text),
-                            new SqlParameter("@Address", TextBox3.Text),
-                            new SqlParameter("@VoterIDNumber", TextBox4.Text),
-                            new SqlParameter("@Email", TextBox5.Text),
-                            new SqlParameter("@PasswordHash", PasswordHelper.HashPassword(TextBox6.Text)),
-                            new SqlParameter("@Phone", TextBox7.Text),
-                            new SqlParameter("@PhotoPath", photoPath));
+                        try
+                        {
+                            obj.SetData(s,
+                                new SqlParameter("@Name", TextBox1.Text),
+                                new SqlParameter("@DOB", dob),
+                                new SqlParameter("@Gender", DropDownList1.SelectedItem.Text),
+                                new SqlParameter("@Address", TextBox3.Text),
+                                new SqlParameter("@VoterIDNumber", TextBox4.Text),
+                                new SqlParameter("@Email", TextBox5.Text),
+                                new SqlParameter("@PasswordHash", PasswordHelper.HashPassword(TextBox6.Text)),
+                                new SqlParameter("@Phone", TextBox7.Text),
+                                new SqlParameter("@PhotoPath", photoPath));
+                        }
+                        catch (SqlException)
+                        {
+                            try { File.Delete(fullPath); } catch { /* best effort */ }
+                            ClientScript.RegisterStartupScript(
+                                this.GetType(),
+                                "alert",
+                                "alert('Registration failed. That Aadhar ID or email may already be registered.');",
+                                true);
+                            return;
+                        }
                         string script = "alert('You are registered successfully.'); window.location.href='Login.aspx';";
                         ClientScript.RegisterStartupScript(this.GetType(), "alert", script, true);
                     }

@@ -102,16 +102,29 @@ namespace EVotingSystem
 
 
                         string s = "INSERT INTO Party(PartyName,SymbolImagePath,LeaderName,LeaderPhotoPath,Objective,Email,PasswordHash,Phone) VALUES(@PartyName,@SymbolImagePath,@LeaderName,@LeaderPhotoPath,@Objective,@Email,@PasswordHash,@Phone)";
-                        obj.SetData(s,
-                        new SqlParameter("@PartyName", TextBox1.Text),
-                        new SqlParameter("@SymbolImagePath", partySymbolPath),
-                        new SqlParameter("@LeaderName", TextBox2.Text),
-                        new SqlParameter("@LeaderPhotoPath", leaderPhotoPath),
-                        new SqlParameter("@Objective", TextBox3.Text),
-                        new SqlParameter("@Email", TextBox5.Text),
-                        new SqlParameter("@PasswordHash", PasswordHelper.HashPassword(TextBox6.Text)),
-                        new SqlParameter("@Phone", TextBox7.Text));
-
+                        try
+                        {
+                            obj.SetData(s,
+                            new SqlParameter("@PartyName", TextBox1.Text),
+                            new SqlParameter("@SymbolImagePath", partySymbolPath),
+                            new SqlParameter("@LeaderName", TextBox2.Text),
+                            new SqlParameter("@LeaderPhotoPath", leaderPhotoPath),
+                            new SqlParameter("@Objective", TextBox3.Text),
+                            new SqlParameter("@Email", TextBox5.Text),
+                            new SqlParameter("@PasswordHash", PasswordHelper.HashPassword(TextBox6.Text)),
+                            new SqlParameter("@Phone", TextBox7.Text));
+                        }
+                        catch (SqlException)
+                        {
+                            try { File.Delete(leaderFullPath); } catch { /* best effort */ }
+                            try { File.Delete(symbolFullPath); } catch { /* best effort */ }
+                            ClientScript.RegisterStartupScript(
+                                this.GetType(),
+                                "alert",
+                                "alert('Registration failed. That email or phone may already be registered.');",
+                                true);
+                            return;
+                        }
                         string script = "alert('Party registered successfully.'); window.location.href='Login.aspx';";
                         ClientScript.RegisterStartupScript(this.GetType(), "alert", script, true);
                     }
