@@ -204,7 +204,11 @@ namespace EVotingSystem
                         }
 
                         string folderPath = Server.MapPath("~/Uploads/VoterPhotos/");
-                        
+
+                        if (!Directory.Exists(folderPath))
+                        {
+                            Directory.CreateDirectory(folderPath);
+                        }
 
                         string fileName = Guid.NewGuid().ToString() + Path.GetExtension(FileUpload1.FileName).ToLowerInvariant();
                         string fullPath = Path.Combine(folderPath, fileName);

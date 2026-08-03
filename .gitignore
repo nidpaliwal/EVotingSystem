@@ -22,7 +22,10 @@ TestResults/
 *.publish.xml
 
 ## Local uploads and runtime data
-Uploads/
+# User-uploaded content is runtime data; but keep the security
+# web.config that blocks script execution inside Uploads.
+Uploads/*
+!Uploads/web.config
 App_Data/
 
 ## OS generated files
