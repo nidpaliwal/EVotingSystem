@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
@@ -31,7 +32,12 @@ namespace EVotingSystem
 
             if (Request.QueryString["id"] != null)
             {
-                electionId = Convert.ToInt32(Request.QueryString["id"]);
+                if (!int.TryParse(Request.QueryString["id"], out electionId))
+                {
+                    lblMessage.Text = "Invalid election id.";
+                    GridView1.Visible = false;
+                    return;
+                }
             }
             else
             {
@@ -46,8 +52,8 @@ namespace EVotingSystem
                 electionId = Convert.ToInt32(dtFallback.Rows[0]["ElectionID"]);
             }
 
-            string electionQuery = "SELECT Title, EndDate, IsActive FROM Election WHERE ElectionID=" + electionId;
-            DataTable dtElection = obj.GetData(electionQuery);
+            string electionQuery = "SELECT Title, EndDate, IsActive FROM Election WHERE ElectionID=@ElectionID";
+            DataTable dtElection = obj.GetData(electionQuery, new SqlParameter("@ElectionID", electionId));
 
             if (dtElection.Rows.Count == 0)
             {
@@ -77,12 +83,12 @@ namespace EVotingSystem
             string resultsQuery = @"
                 SELECT p.PartyName, p.SymbolImagePath, COUNT(v.VoteID) AS VoteCount
                 FROM Party p
-                LEFT JOIN Votes v ON p.PartyID = v.PartyID AND v.ElectionID = " + electionId + @"
+                LEFT JOIN Votes v ON p.PartyID = v.PartyID AND v.ElectionID = @ElectionID
                 WHERE p.Status = 'Approved'
                 GROUP BY p.PartyName, p.SymbolImagePath
                 ORDER BY VoteCount DESC";
 
-            DataTable dtResults = obj.GetData(resultsQuery);
+            DataTable dtResults = obj.GetData(resultsQuery, new SqlParameter("@ElectionID", electionId));
             GridView1.DataSource = dtResults;
             GridView1.DataBind();
         }
