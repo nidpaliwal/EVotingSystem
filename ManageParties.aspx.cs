@@ -44,10 +44,8 @@ namespace EVotingSystem
 
         protected void Button1_Click(object sender, EventArgs e)
         {
-            string s = "SELECT  PartyID,PartyName,LeaderName,Status,Email,Phone,SymbolImagePath from Party where PartyName like '%" +TextBox1.Text+ "%' or CAST(PartyId as varchar) like '%" + TextBox1.Text+"%'" ;
-            obj.GetData(s);
-            DataTable dt = new DataTable();
-            dt = obj.GetData(s);
+            string s = "SELECT PartyID,PartyName,LeaderName,Status,Email,Phone,SymbolImagePath from Party where PartyName like @Search or CAST(PartyId as varchar) like @Search";
+            DataTable dt = obj.GetData(s, new SqlParameter("@Search", "%" + TextBox1.Text + "%"));
             if (dt != null)
             {
                 GridView1.DataSource = dt;
@@ -60,24 +58,30 @@ namespace EVotingSystem
             string email = e.CommandArgument.ToString();
 
             // Get PartyID for this party's email
-            string idQuery = "SELECT PartyID FROM Party WHERE Email='" + email + "'";
-            DataTable dtId = obj.GetData(idQuery);
+            string idQuery = "SELECT PartyID FROM Party WHERE Email=@Email";
+            DataTable dtId = obj.GetData(idQuery, new SqlParameter("@Email", email));
+            if (dtId.Rows.Count == 0)
+                return;
             int partyId = Convert.ToInt32(dtId.Rows[0]["PartyID"]);
 
             // Get AdminID using the logged-in Admin's email from Session
             string adminEmail = Session["Email"].ToString();
-            string adminQuery = "SELECT AdminID FROM Admin WHERE Email='" + adminEmail + "'";
-            DataTable dtAdmin = obj.GetData(adminQuery);
+            string adminQuery = "SELECT AdminID FROM Admin WHERE Email=@Email";
+            DataTable dtAdmin = obj.GetData(adminQuery, new SqlParameter("@Email", adminEmail));
+            if (dtAdmin.Rows.Count == 0)
+                return;
             int adminId = Convert.ToInt32(dtAdmin.Rows[0]["AdminID"]);
 
             if (e.CommandName == "Approve")
             {
-                string updateSql = "UPDATE Party SET Status='Approved' WHERE Email='" + email + "'";
-                obj.SetData(updateSql);
+                string updateSql = "UPDATE Party SET Status='Approved' WHERE Email=@Email";
+                obj.SetData(updateSql, new SqlParameter("@Email", email));
 
-                string logSql = "INSERT INTO AuditLog (AdminID, Action, TargetType, TargetID) VALUES ("
-                    + adminId + ", 'Approved', 'Party', " + partyId + ")";
-                obj.SetData(logSql);
+                string logSql = "INSERT INTO AuditLog (AdminID, Action, TargetType, TargetID) VALUES (@AdminID, @Action, 'Party', @TargetID)";
+                obj.SetData(logSql,
+                    new SqlParameter("@AdminID", adminId),
+                    new SqlParameter("@Action", "Approved"),
+                    new SqlParameter("@TargetID", partyId));
 
                 ClientScript.RegisterStartupScript(this.GetType(), "alert", "alert('Party approved successfully.');", true);
             }
@@ -85,12 +89,16 @@ namespace EVotingSystem
             {
                 string reason = hdnDeclineReason.Value;
 
-                string updateSql = "UPDATE Party SET Status='Declined', DeclineReason='" + reason + "' WHERE Email='" + email + "'";
-                obj.SetData(updateSql);
+                string updateSql = "UPDATE Party SET Status='Declined', DeclineReason=@Reason WHERE Email=@Email";
+                obj.SetData(updateSql,
+                    new SqlParameter("@Reason", reason),
+                    new SqlParameter("@Email", email));
 
-                string logSql = "INSERT INTO AuditLog (AdminID, Action, TargetType, TargetID) VALUES ("
-                    + adminId + ", 'Declined: " + reason.Replace("'", "''") + "', 'Party', " + partyId + ")";
-                obj.SetData(logSql);
+                string logSql = "INSERT INTO AuditLog (AdminID, Action, TargetType, TargetID) VALUES (@AdminID, @Action, 'Party', @TargetID)";
+                obj.SetData(logSql,
+                    new SqlParameter("@AdminID", adminId),
+                    new SqlParameter("@Action", "Declined: " + reason),
+                    new SqlParameter("@TargetID", partyId));
 
                 ClientScript.RegisterStartupScript(this.GetType(), "alert", "alert('Party declined.');", true);
             }

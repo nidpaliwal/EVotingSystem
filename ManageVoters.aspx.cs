@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
@@ -33,10 +34,8 @@ namespace EVotingSystem
 
         protected void Button1_Click(object sender, EventArgs e)
         {
-            string s = "SELECT  VoterID,Name,VoterIDNumber, Email, Phone, Status,PhotoPath FROM Voter where Name like '%" + TextBox1.Text + "%' or VoterIDNumber like '%" + TextBox1.Text + "%'";
-            obj.GetData(s);
-            DataTable dt = new DataTable();
-            dt = obj.GetData(s);
+            string s = "SELECT VoterID,Name,VoterIDNumber, Email, Phone, Status,PhotoPath FROM Voter where Name like @Search or VoterIDNumber like @Search";
+            DataTable dt = obj.GetData(s, new SqlParameter("@Search", "%" + TextBox1.Text + "%"));
             if (dt != null)
             {
                 GridView1.DataSource = dt;
@@ -48,24 +47,30 @@ namespace EVotingSystem
             string email = e.CommandArgument.ToString();
 
             // Get VoterID for this voter's email
-            string idQuery = "SELECT VoterID FROM Voter WHERE Email='" + email + "'";
-            DataTable dtId = obj.GetData(idQuery);
+            string idQuery = "SELECT VoterID FROM Voter WHERE Email=@Email";
+            DataTable dtId = obj.GetData(idQuery, new SqlParameter("@Email", email));
+            if (dtId.Rows.Count == 0)
+                return;
             int voterId = Convert.ToInt32(dtId.Rows[0]["VoterID"]);
 
             // Get AdminID using the logged-in Admin's email from Session
             string adminEmail = Session["Email"].ToString();
-            string adminQuery = "SELECT AdminID FROM Admin WHERE Email='" + adminEmail + "'";
-            DataTable dtAdmin = obj.GetData(adminQuery);
+            string adminQuery = "SELECT AdminID FROM Admin WHERE Email=@Email";
+            DataTable dtAdmin = obj.GetData(adminQuery, new SqlParameter("@Email", adminEmail));
+            if (dtAdmin.Rows.Count == 0)
+                return;
             int adminId = Convert.ToInt32(dtAdmin.Rows[0]["AdminID"]);
 
             if (e.CommandName == "Approve")
             {
-                string updateSql = "UPDATE Voter SET Status='Approved' WHERE Email='" + email + "'";
-                obj.SetData(updateSql);
+                string updateSql = "UPDATE Voter SET Status='Approved' WHERE Email=@Email";
+                obj.SetData(updateSql, new SqlParameter("@Email", email));
 
-                string logSql = "INSERT INTO AuditLog (AdminID, Action, TargetType, TargetID) VALUES ("
-                    + adminId + ", 'Approved', 'Voter', " + voterId + ")";
-                obj.SetData(logSql);
+                string logSql = "INSERT INTO AuditLog (AdminID, Action, TargetType, TargetID) VALUES (@AdminID, @Action, 'Voter', @TargetID)";
+                obj.SetData(logSql,
+                    new SqlParameter("@AdminID", adminId),
+                    new SqlParameter("@Action", "Approved"),
+                    new SqlParameter("@TargetID", voterId));
 
                 ClientScript.RegisterStartupScript(this.GetType(), "alert", "alert('Voter approved successfully.');", true);
             }
@@ -73,12 +78,16 @@ namespace EVotingSystem
             {
                 string reason = hdnDeclineReason.Value;
 
-                string updateSql = "UPDATE Voter SET Status='Declined', DeclineReason='" + reason + "' WHERE Email='" + email + "'";
-                obj.SetData(updateSql);
+                string updateSql = "UPDATE Voter SET Status='Declined', DeclineReason=@Reason WHERE Email=@Email";
+                obj.SetData(updateSql,
+                    new SqlParameter("@Reason", reason),
+                    new SqlParameter("@Email", email));
 
-                string logSql = "INSERT INTO AuditLog (AdminID, Action, TargetType, TargetID) VALUES ("
-                    + adminId + ", 'Declined: " + reason.Replace("'", "''") + "', 'Voter', " + voterId + ")";
-                obj.SetData(logSql);
+                string logSql = "INSERT INTO AuditLog (AdminID, Action, TargetType, TargetID) VALUES (@AdminID, @Action, 'Voter', @TargetID)";
+                obj.SetData(logSql,
+                    new SqlParameter("@AdminID", adminId),
+                    new SqlParameter("@Action", "Declined: " + reason),
+                    new SqlParameter("@TargetID", voterId));
 
                 ClientScript.RegisterStartupScript(this.GetType(), "alert", "alert('Voter declined.');", true);
             }

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
@@ -28,8 +29,8 @@ namespace EVotingSystem
         private void LoadStatus()
         {
             string email = Session["Email"].ToString();
-            string s = "SELECT Name, Status, DeclineReason, HasVoted FROM Voter WHERE Email='" + email + "'";
-            DataTable dt = obj.GetData(s);
+            string s = "SELECT Name, Status, DeclineReason, HasVoted FROM Voter WHERE Email=@Email";
+            DataTable dt = obj.GetData(s, new SqlParameter("@Email", email));
 
             if (dt.Rows.Count > 0)
             {

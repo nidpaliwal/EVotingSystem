@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
@@ -29,8 +30,8 @@ namespace EVotingSystem
         {
             string email = Session["Email"].ToString();
 
-            string voterQuery = "SELECT Status, HasVoted FROM Voter WHERE Email='" + email + "'";
-            DataTable dtVoter = obj.GetData(voterQuery);
+            string voterQuery = "SELECT Status, HasVoted FROM Voter WHERE Email=@Email";
+            DataTable dtVoter = obj.GetData(voterQuery, new SqlParameter("@Email", email));
 
             if (dtVoter.Rows.Count == 0)
             {
@@ -95,45 +96,38 @@ namespace EVotingSystem
                 return;
             }
 
+            // The radio value arrives as untrusted client input — validate it
+            // is a plain integer before using it.
+            int partyId;
+            if (!int.TryParse(selectedPartyId, out partyId))
+            {
+                ClientScript.RegisterStartupScript(this.GetType(), "alert", "alert('Invalid party selection.');", true);
+                CheckEligibilityAndLoad();
+                return;
+            }
+
             string email = Session["Email"].ToString();
 
-            // Re-verify eligibility server-side (never trust client alone)
-            string voterQuery = "SELECT VoterID, Status, HasVoted FROM Voter WHERE Email='" + email + "'";
-            DataTable dtVoter = obj.GetData(voterQuery);
+            // Fast-path pre-check for good UX; the authoritative re-checks
+            // happen inside CastVote's transaction.
+            string voterQuery = "SELECT VoterID FROM Voter WHERE Email=@Email";
+            DataTable dtVoter = obj.GetData(voterQuery, new SqlParameter("@Email", email));
 
-            if (dtVoter.Rows.Count == 0 || dtVoter.Rows[0]["Status"].ToString() != "Approved")
+            if (dtVoter.Rows.Count == 0)
             {
                 ClientScript.RegisterStartupScript(this.GetType(), "alert", "alert('You are not eligible to vote.');", true);
                 return;
             }
 
-            bool hasVoted = Convert.ToBoolean(dtVoter.Rows[0]["HasVoted"]);
-            if (hasVoted)
+            int voterId = Convert.ToInt32(dtVoter.Rows[0]["VoterID"]);
+
+            string error = obj.CastVote(voterId, partyId);
+            if (error != null)
             {
-                ClientScript.RegisterStartupScript(this.GetType(), "alert", "alert('You have already voted.');", true);
+                ClientScript.RegisterStartupScript(this.GetType(), "alert", "alert('" + error.Replace("'", "\\'") + "');", true);
                 CheckEligibilityAndLoad();
                 return;
             }
-
-            string electionQuery = "SELECT ElectionID FROM Election WHERE IsActive=1";
-            DataTable dtElection = obj.GetData(electionQuery);
-
-            if (dtElection.Rows.Count == 0)
-            {
-                ClientScript.RegisterStartupScript(this.GetType(), "alert", "alert('No active election.');", true);
-                return;
-            }
-
-            int electionId = Convert.ToInt32(dtElection.Rows[0]["ElectionID"]);
-            int voterId = Convert.ToInt32(dtVoter.Rows[0]["VoterID"]);
-
-            // Insert the vote
-            string insertVoteSql = "INSERT INTO Votes (ElectionID, PartyID) VALUES (" + electionId + ", " + selectedPartyId + ")";
-            obj.SetData(insertVoteSql);
-
-            // Mark voter as having voted
-            string updateVoterSql = "UPDATE Voter SET HasVoted=1 WHERE VoterID=" + voterId;
-            obj.SetData(updateVoterSql);
 
             ClientScript.RegisterStartupScript(this.GetType(), "alert", "alert('Your vote has been recorded successfully. Thank you.');", true);
 

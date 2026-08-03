@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.IO;
 using System.Linq;
 using System.Web;
@@ -29,16 +30,16 @@ namespace EVotingSystem
                 return;
             }
 
-            string sql = "select Email from Admin where Email = '" + TextBox5.Text + "'";
-            var existingEmails = obj.GetData(sql);
+            string sql = "select Email from Admin where Email = @Email";
+            var existingEmails = obj.GetData(sql, new SqlParameter("@Email", TextBox5.Text));
             if (existingEmails.Rows.Count == 0)
             {
-                sql = "select Email from Party where Email ='" + TextBox5.Text + "'";
-                existingEmails = obj.GetData(sql);
+                sql = "select Email from Party where Email = @Email";
+                existingEmails = obj.GetData(sql, new SqlParameter("@Email", TextBox5.Text));
                 if (existingEmails.Rows.Count == 0)
                 {
-                    sql = "select Email from Voter where Email ='" + TextBox5.Text + "'";
-                    existingEmails = obj.GetData(sql);
+                    sql = "select Email from Voter where Email = @Email";
+                    existingEmails = obj.GetData(sql, new SqlParameter("@Email", TextBox5.Text));
                     if (existingEmails.Rows.Count == 0)
                     {
                         // New email, proceed with registration
@@ -77,17 +78,17 @@ namespace EVotingSystem
 
 
 
-                        string s = "INSERT INTO Party(PartyName,SymbolImagePath,LeaderName,LeaderPhotoPath,Objective,Email,PasswordHash,Phone) VALUES('" +
-                        TextBox1.Text + "','" +
-                        partySymbolPath + "','" +
-                        TextBox2.Text + "','" +
-                        leaderPhotoPath + "','" +
-                        TextBox3.Text + "','" +
-                        TextBox5.Text + "','" +
-                        PasswordHelper.HashPassword(TextBox6.Text) + "','" +
-                        TextBox7.Text + "')";
+                        string s = "INSERT INTO Party(PartyName,SymbolImagePath,LeaderName,LeaderPhotoPath,Objective,Email,PasswordHash,Phone) VALUES(@PartyName,@SymbolImagePath,@LeaderName,@LeaderPhotoPath,@Objective,@Email,@PasswordHash,@Phone)";
+                        obj.SetData(s,
+                        new SqlParameter("@PartyName", TextBox1.Text),
+                        new SqlParameter("@SymbolImagePath", partySymbolPath),
+                        new SqlParameter("@LeaderName", TextBox2.Text),
+                        new SqlParameter("@LeaderPhotoPath", leaderPhotoPath),
+                        new SqlParameter("@Objective", TextBox3.Text),
+                        new SqlParameter("@Email", TextBox5.Text),
+                        new SqlParameter("@PasswordHash", PasswordHelper.HashPassword(TextBox6.Text)),
+                        new SqlParameter("@Phone", TextBox7.Text));
 
-                        obj.SetData(s);
                         string script = "alert('Party registered successfully.'); window.location.href='Login.aspx';";
                         ClientScript.RegisterStartupScript(this.GetType(), "alert", script, true);
                     }

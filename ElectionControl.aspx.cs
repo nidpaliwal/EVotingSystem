@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
@@ -41,9 +42,14 @@ namespace EVotingSystem
                 return;
             }
 
-            DateTime startDate = DateTime.ParseExact(TextBoxStart.Text.Trim(), "yyyy-MM-dd", System.Globalization.CultureInfo.InvariantCulture);
-            DateTime endDate = DateTime.ParseExact(TextBoxEnd.Text.Trim(), "yyyy-MM-dd", System.Globalization.CultureInfo.InvariantCulture);
-
+            DateTime startDate;
+            DateTime endDate;
+            if (!DateTime.TryParseExact(TextBoxStart.Text.Trim(), "yyyy-MM-dd", System.Globalization.CultureInfo.InvariantCulture, System.Globalization.DateTimeStyles.None, out startDate)
+                || !DateTime.TryParseExact(TextBoxEnd.Text.Trim(), "yyyy-MM-dd", System.Globalization.CultureInfo.InvariantCulture, System.Globalization.DateTimeStyles.None, out endDate))
+            {
+                ClientScript.RegisterStartupScript(this.GetType(), "alert", "alert('Please enter dates in yyyy-MM-dd format.');", true);
+                return;
+            }
 
             if (endDate <= startDate)
             {
@@ -51,11 +57,11 @@ namespace EVotingSystem
                 return;
             }
 
-            string insertSql = "INSERT INTO Election (Title, StartDate, EndDate, IsActive) VALUES ('"
-                + TextBoxTitle.Text.Trim() + "', '" + startDate.ToString("yyyy-MM-dd HH:mm:ss") + "', '"
-                + endDate.ToString("yyyy-MM-dd HH:mm:ss") + "', 0)";
-
-            obj.SetData(insertSql);
+            string insertSql = "INSERT INTO Election (Title, StartDate, EndDate, IsActive) VALUES (@Title, @StartDate, @EndDate, 0)";
+            obj.SetData(insertSql,
+                new SqlParameter("@Title", TextBoxTitle.Text.Trim()),
+                new SqlParameter("@StartDate", startDate),
+                new SqlParameter("@EndDate", endDate));
 
             ClientScript.RegisterStartupScript(this.GetType(), "alert", "alert('Election created successfully.');", true);
             BindGrid();
@@ -63,7 +69,9 @@ namespace EVotingSystem
 
         protected void GridView1_RowCommand(object sender, GridViewCommandEventArgs e)
         {
-            int electionId = Convert.ToInt32(e.CommandArgument);
+            int electionId;
+            if (!int.TryParse(Convert.ToString(e.CommandArgument), out electionId))
+                return;
 
             if (e.CommandName == "Activate")
             {
@@ -78,7 +86,13 @@ namespace EVotingSystem
                     return;
                 }
 
-                DateTime newEndDate = Convert.ToDateTime(txtNewEndDate.Text);
+                DateTime newEndDate;
+                if (!DateTime.TryParse(txtNewEndDate.Text, out newEndDate))
+                {
+                    ClientScript.RegisterStartupScript(this.GetType(), "alert", "alert('Invalid End Date format.');", true);
+                    BindGrid();
+                    return;
+                }
 
                 if (newEndDate <= DateTime.Now)
                 {
@@ -91,7 +105,9 @@ namespace EVotingSystem
                 obj.SetData("UPDATE Election SET IsActive = 0");
 
                 // Activate this one with the new EndDate
-                obj.SetData("UPDATE Election SET IsActive = 1, EndDate = '" + newEndDate.ToString("yyyy-MM-dd HH:mm:ss") + "' WHERE ElectionID = " + electionId);
+                obj.SetData("UPDATE Election SET IsActive = 1, EndDate = @EndDate WHERE ElectionID = @ElectionID",
+                    new SqlParameter("@EndDate", newEndDate),
+                    new SqlParameter("@ElectionID", electionId));
 
                 // Fresh voting round
                 obj.SetData("UPDATE Voter SET HasVoted = 0");
@@ -100,7 +116,8 @@ namespace EVotingSystem
             }
             else if (e.CommandName == "Deactivate")
             {
-                obj.SetData("UPDATE Election SET IsActive = 0 WHERE ElectionID = " + electionId);
+                obj.SetData("UPDATE Election SET IsActive = 0 WHERE ElectionID = @ElectionID",
+                    new SqlParameter("@ElectionID", electionId));
                 ClientScript.RegisterStartupScript(this.GetType(), "alert", "alert('Election deactivated.');", true);
             }
 

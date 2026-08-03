@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
@@ -28,8 +29,8 @@ namespace EVotingSystem
         private void LoadProfile()
         {
             string email = Session["Email"].ToString();
-            string s = "SELECT PartyName, LeaderName, Status, DeclineReason, Objective, LegalHistory FROM Party WHERE Email='" + email + "'";
-            DataTable dt = obj.GetData(s);
+            string s = "SELECT PartyName, LeaderName, Status, DeclineReason, Objective, LegalHistory FROM Party WHERE Email=@Email";
+            DataTable dt = obj.GetData(s, new SqlParameter("@Email", email));
 
             if (dt.Rows.Count > 0)
             {
@@ -59,12 +60,11 @@ namespace EVotingSystem
         {
             string email = Session["Email"].ToString();
 
-            string updateSql = "UPDATE Party SET Objective='" + TextBoxObjective.Text.Replace("'", "''")
-                + "', LegalHistory='" + TextBoxLegalHistory.Text.Replace("'", "''")
-                + "', Status='Pending', DeclineReason=NULL"
-                + " WHERE Email='" + email + "'";
-
-            obj.SetData(updateSql);
+            string updateSql = "UPDATE Party SET Objective=@Objective, LegalHistory=@LegalHistory, Status='Pending', DeclineReason=NULL WHERE Email=@Email";
+            obj.SetData(updateSql,
+                new SqlParameter("@Objective", TextBoxObjective.Text),
+                new SqlParameter("@LegalHistory", TextBoxLegalHistory.Text),
+                new SqlParameter("@Email", email));
 
             ClientScript.RegisterStartupScript(this.GetType(), "alert", "alert('Profile updated. Your changes have been submitted for Admin re-approval.');", true);
 

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
@@ -22,8 +23,8 @@ namespace EVotingSystem
             if (!IsPostBack)
             {
                 string email = Session["Email"].ToString();
-                string s = "SELECT LeaderName,Email FROM Party WHERE Email='" + email + "'";
-                DataTable dt = obj.GetData(s);
+                string s = "SELECT LeaderName,Email FROM Party WHERE Email=@Email";
+                DataTable dt = obj.GetData(s, new SqlParameter("@Email", email));
 
                 if (dt.Rows.Count > 0)
                 {

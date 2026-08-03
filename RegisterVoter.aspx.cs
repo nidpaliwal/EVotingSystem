@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Data.SqlClient;
 using System.IO;
 using System.Linq;
 using System.Security.Cryptography;
@@ -48,8 +49,14 @@ namespace EVotingSystem
                 true);
                 return;
             }
+
             // Age validation — must be at least 18 years old
-            DateTime dob = Convert.ToDateTime(TextBox2.Text.Trim()); // adjust TextBox2 to your actual DOB field
+            DateTime dob;
+            if (!DateTime.TryParse(TextBox2.Text.Trim(), out dob))
+            {
+                ClientScript.RegisterStartupScript(this.GetType(), "alert", "alert('Please enter a valid date of birth.');", true);
+                return;
+            }
             DateTime today = DateTime.Today;
             int age = today.Year - dob.Year;
             if (dob.Date > today.AddYears(-age)) age--; // adjusts if birthday hasn't occurred yet this year
@@ -60,11 +67,9 @@ namespace EVotingSystem
                 return;
             }
 
-            // Existing email check (keep as-is)...
-
             // New: Check duplicate Aadhar/VoterIDNumber
-            string aadharCheck = "SELECT VoterID FROM Voter WHERE VoterIDNumber='" + TextBox4.Text.Trim() + "'";
-            DataTable dtAadhar = obj.GetData(aadharCheck);
+            string aadharCheck = "SELECT VoterID FROM Voter WHERE VoterIDNumber=@VoterIDNumber";
+            DataTable dtAadhar = obj.GetData(aadharCheck, new SqlParameter("@VoterIDNumber", TextBox4.Text.Trim()));
 
             if (dtAadhar.Rows.Count > 0)
             {
@@ -72,16 +77,16 @@ namespace EVotingSystem
                 return;
             }
 
-            string sql = "select Email from Admin where Email = '"+TextBox5.Text+"'";
-            var existingEmails = obj.GetData(sql);
+            string sql = "select Email from Admin where Email = @Email";
+            var existingEmails = obj.GetData(sql, new SqlParameter("@Email", TextBox5.Text));
             if (existingEmails.Rows.Count == 0) 
             {
-                sql = "select Email from Party where Email ='"+TextBox5.Text+"'";
-                existingEmails = obj.GetData(sql);
+                sql = "select Email from Party where Email = @Email";
+                existingEmails = obj.GetData(sql, new SqlParameter("@Email", TextBox5.Text));
                 if (existingEmails.Rows.Count == 0)
                 {
-                    sql = "select Email from Voter where Email ='"+TextBox5.Text +"'";
-                    existingEmails = obj.GetData(sql);
+                    sql = "select Email from Voter where Email = @Email";
+                    existingEmails = obj.GetData(sql, new SqlParameter("@Email", TextBox5.Text));
                     if (existingEmails.Rows.Count == 0)
                     {
                         // New email, proceed with registration
@@ -110,13 +115,21 @@ namespace EVotingSystem
                         // Save relative path in database
                         string photoPath = "~/Uploads/VoterPhotos/" + fileName;
 
-                        string s = "insert into Voter(Name,DOB,Gender,Address,VoterIDNumber,Email,PasswordHash,Phone,PhotoPath) values('" + TextBox1.Text + "','" + TextBox2.Text + "','" + DropDownList1.SelectedItem.Text + "','" + TextBox3.Text + "','" + TextBox4.Text + "','" + TextBox5.Text + "','" + PasswordHelper.HashPassword(TextBox6.Text) + "','" + TextBox7.Text + "','" + photoPath + "')";
-                        obj.SetData(s);
+                        string s = "insert into Voter(Name,DOB,Gender,Address,VoterIDNumber,Email,PasswordHash,Phone,PhotoPath) values(@Name,@DOB,@Gender,@Address,@VoterIDNumber,@Email,@PasswordHash,@Phone,@PhotoPath)";
+                        obj.SetData(s,
+                            new SqlParameter("@Name", TextBox1.Text),
+                            new SqlParameter("@DOB", dob),
+                            new SqlParameter("@Gender", DropDownList1.SelectedItem.Text),
+                            new SqlParameter("@Address", TextBox3.Text),
+                            new SqlParameter("@VoterIDNumber", TextBox4.Text),
+                            new SqlParameter("@Email", TextBox5.Text),
+                            new SqlParameter("@PasswordHash", PasswordHelper.HashPassword(TextBox6.Text)),
+                            new SqlParameter("@Phone", TextBox7.Text),
+                            new SqlParameter("@PhotoPath", photoPath));
                         string script = "alert('You are registered successfully.'); window.location.href='Login.aspx';";
                         ClientScript.RegisterStartupScript(this.GetType(), "alert", script, true);
                     }
                    
-
 
 
                        

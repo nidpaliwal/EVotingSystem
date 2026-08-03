@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Drawing.Drawing2D;
 using System.Linq;
 using System.Web;
@@ -23,8 +24,10 @@ namespace EVotingSystem
             string enteredHash = PasswordHelper.HashPassword(TextBox2.Text.Trim());
 
             // Step 1: Check Admin
-            string sAdmin = "Select * from Admin where Email='" + email + "' and PasswordHash='" + enteredHash + "'";
-            var dtAdmin = obj.GetData(sAdmin);
+            string sAdmin = "Select * from Admin where Email=@Email and PasswordHash=@Hash";
+            var dtAdmin = obj.GetData(sAdmin,
+                new SqlParameter("@Email", email),
+                new SqlParameter("@Hash", enteredHash));
 
             if (dtAdmin.Rows.Count > 0)
             {
@@ -35,8 +38,10 @@ namespace EVotingSystem
             }
 
             // Step 2: Check Party
-            string sParty = "Select * from Party where Email='" + email + "' and PasswordHash='" + enteredHash + "'";
-            var dtParty = obj.GetData(sParty);
+            string sParty = "Select * from Party where Email=@Email and PasswordHash=@Hash";
+            var dtParty = obj.GetData(sParty,
+                new SqlParameter("@Email", email),
+                new SqlParameter("@Hash", enteredHash));
 
             if (dtParty.Rows.Count > 0)
             {
@@ -47,8 +52,10 @@ namespace EVotingSystem
         }
 
         // Step 3: Check Voter
-        string sVoter = "Select * from Voter where Email='" + email + "' and PasswordHash='" + enteredHash + "'";
-        var dtVoter = obj.GetData(sVoter);
+        string sVoter = "Select * from Voter where Email=@Email and PasswordHash=@Hash";
+        var dtVoter = obj.GetData(sVoter,
+            new SqlParameter("@Email", email),
+            new SqlParameter("@Hash", enteredHash));
 
             if (dtVoter.Rows.Count > 0)
             {
