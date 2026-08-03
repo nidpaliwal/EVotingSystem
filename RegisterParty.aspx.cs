@@ -43,6 +43,29 @@ namespace EVotingSystem
                     if (existingEmails.Rows.Count == 0)
                     {
                         // New email, proceed with registration
+
+                        // Validate both uploads (extension, size, content)
+                        string leaderUploadError = UploadHelper.Validate(FileUpload1.PostedFile);
+                        if (leaderUploadError != null)
+                        {
+                            ClientScript.RegisterStartupScript(
+                                this.GetType(),
+                                "alert",
+                                "alert('Leader photo: " + leaderUploadError.Replace("'", "\\'") + "');",
+                                true);
+                            return;
+                        }
+                        string symbolUploadError = UploadHelper.Validate(FileUpload2.PostedFile);
+                        if (symbolUploadError != null)
+                        {
+                            ClientScript.RegisterStartupScript(
+                                this.GetType(),
+                                "alert",
+                                "alert('Party symbol: " + symbolUploadError.Replace("'", "\\'") + "');",
+                                true);
+                            return;
+                        }
+
                         // Leader Photo
                         string leaderFolder = Server.MapPath("~/Uploads/LeaderPhotos/");
 
@@ -51,7 +74,7 @@ namespace EVotingSystem
                             Directory.CreateDirectory(leaderFolder);
                         }
 
-                        string leaderFileName = Guid.NewGuid().ToString() + Path.GetExtension(FileUpload1.FileName);
+                        string leaderFileName = Guid.NewGuid().ToString() + Path.GetExtension(FileUpload1.FileName).ToLowerInvariant();
 
                         string leaderFullPath = Path.Combine(leaderFolder, leaderFileName);
 
@@ -68,7 +91,7 @@ namespace EVotingSystem
                             Directory.CreateDirectory(symbolFolder);
                         }
 
-                        string symbolFileName = Guid.NewGuid().ToString() + Path.GetExtension(FileUpload2.FileName);
+                        string symbolFileName = Guid.NewGuid().ToString() + Path.GetExtension(FileUpload2.FileName).ToLowerInvariant();
 
                         string symbolFullPath = Path.Combine(symbolFolder, symbolFileName);
 

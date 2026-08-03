@@ -60,13 +60,13 @@ namespace EVotingSystem
                 return;
             }
 
-            // Check active election + get its Title/dates for display
-            string electionQuery = "SELECT ElectionID, Title, StartDate, EndDate FROM Election WHERE IsActive=1";
+            // Check active election whose voting window covers now
+            string electionQuery = "SELECT ElectionID, Title, StartDate, EndDate FROM Election WHERE IsActive=1 AND GETDATE() BETWEEN StartDate AND EndDate";
             DataTable dtElection = obj.GetData(electionQuery);
 
             if (dtElection.Rows.Count == 0)
             {
-                lblMessage.Text = "There is no active election at this time.";
+                lblMessage.Text = "The election is not currently open for voting.";
                 GridView1.Visible = false;
                 ButtonVote.Visible = false;
                 return;

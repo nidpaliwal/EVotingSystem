@@ -79,13 +79,14 @@ namespace EVotingSystem
                         return "You have already voted.";
                 }
 
-                // 2. There must be an active election.
+                // 2. There must be an active election whose voting window
+                //    (StartDate..EndDate) covers the current time.
                 SqlCommand electionCmd = new SqlCommand(
-                    "SELECT TOP 1 ElectionID FROM Election WITH (UPDLOCK) WHERE IsActive=1",
+                    "SELECT TOP 1 ElectionID FROM Election WITH (UPDLOCK) WHERE IsActive=1 AND GETDATE() BETWEEN StartDate AND EndDate",
                     conn, tx);
                 object electionResult = electionCmd.ExecuteScalar();
                 if (electionResult == null || electionResult == DBNull.Value)
-                    return "There is no active election at this time.";
+                    return "The election is not currently open for voting.";
                 int electionId = Convert.ToInt32(electionResult);
 
                 // 3. The selected party must exist and be approved.

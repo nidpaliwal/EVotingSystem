@@ -91,10 +91,22 @@ namespace EVotingSystem
                     {
                         // New email, proceed with registration
 
+                        // Validate the uploaded photo (extension, size, content)
+                        string uploadError = UploadHelper.Validate(FileUpload1.PostedFile);
+                        if (uploadError != null)
+                        {
+                            ClientScript.RegisterStartupScript(
+                                this.GetType(),
+                                "alert",
+                                "alert('" + uploadError.Replace("'", "\\'") + "');",
+                                true);
+                            return;
+                        }
+
                         string folderPath = Server.MapPath("~/Uploads/VoterPhotos/");
                         
 
-                        string fileName = Guid.NewGuid().ToString() + Path.GetExtension(FileUpload1.FileName);
+                        string fileName = Guid.NewGuid().ToString() + Path.GetExtension(FileUpload1.FileName).ToLowerInvariant();
                         string fullPath = Path.Combine(folderPath, fileName);
 
 
