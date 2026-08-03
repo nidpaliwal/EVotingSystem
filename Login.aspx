@@ -14,17 +14,14 @@
     <div class="card login-card">
         <h3>Login to your account</h3>
         <p class="form-note">Use the credentials you registered with. Voters, parties and admins all sign in here.</p>
-        <div class="form-grid" style="grid-template-columns: 1fr;">
-            <div class="form-grid">
-                <label for="ContentPlaceHolder1_TextBox1">Email</label>
-                <asp:TextBox ID="TextBox1" runat="server" TextMode="Email" MaxLength="100"></asp:TextBox>
-            </div>
-            <div class="form-grid">
-                <label for="TextBox2">Password</label>
-                <div style="display: flex; gap: 8px; align-items: center; max-width: 460px; width: 100%;">
-                    <asp:TextBox ID="TextBox2" runat="server" TextMode="Password" ClientIDMode="Static" MaxLength="128" style="flex: 1;"></asp:TextBox>
-                    <asp:ImageButton ID="ImageButton1" runat="server" Height="20px" ImageUrl="~/Images/hide.png" OnClientClick="togglePassword(); return false;" style="width: 20px;" OnClick="ImageButton1_Click" ToolTip="Show / hide password" />
-                </div>
+        <div class="form-grid">
+            <label for="ContentPlaceHolder1_TextBox1">Email</label>
+            <asp:TextBox ID="TextBox1" runat="server" TextMode="Email" MaxLength="100"></asp:TextBox>
+
+            <label for="TextBox2">Password</label>
+            <div style="display: flex; gap: 8px; align-items: center; max-width: 460px; width: 100%;">
+                <asp:TextBox ID="TextBox2" runat="server" TextMode="Password" ClientIDMode="Static" MaxLength="128" style="flex: 1;"></asp:TextBox>
+                <asp:ImageButton ID="ImageButton1" runat="server" Height="20px" ImageUrl="~/Images/hide.png" OnClientClick="togglePassword(); return false;" style="width: 20px;" OnClick="ImageButton1_Click" ToolTip="Show / hide password" />
             </div>
         </div>
         <asp:Label ID="lblLocked" runat="server" CssClass="lockout-banner" Visible="false"
