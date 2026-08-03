@@ -15,6 +15,7 @@
 [Oo]bj/
 packages/
 TestResults/
+QA_Report.md
 
 ## Publish / deployment
 *.pubxml
