@@ -122,19 +122,49 @@ a:hover { color: var(--accent-dark); }
     outline-offset: -2px;
 }
 
+.nav-link.nav-active {
+    color: #fff;
+    background: rgba(255,255,255,.12);
+    border-bottom-color: #7fa4f5;
+}
+
+/* ============================ Accessibility ============================ */
+
+.skip-link {
+    position: absolute;
+    left: -9999px;
+    top: 0;
+    z-index: 100;
+    background: #fff;
+    color: var(--navy);
+    padding: 10px 16px;
+    font-weight: 600;
+    border-radius: 0 0 6px 0;
+    box-shadow: 0 1px 4px rgba(20,30,60,.2);
+}
+
+.skip-link:focus {
+    left: 0;
+}
+
+main:focus { outline: none; }
+
 /* Role accents */
 
 body.portal-admin .site-header  { background: #4c1d1d; }
 body.portal-admin .site-nav    { background: #5e2525; }
 body.portal-admin .nav-link:hover { border-bottom-color: #e8a0a0; }
+body.portal-admin .nav-link.nav-active { border-bottom-color: #e8a0a0; }
 
 body.portal-party .site-header  { background: #0f4d2e; }
 body.portal-party .site-nav    { background: #135c37; }
 body.portal-party .nav-link:hover { border-bottom-color: #9adcb8; }
+body.portal-party .nav-link.nav-active { border-bottom-color: #9adcb8; }
 
 body.portal-voter .site-header  { background: #123a54; }
 body.portal-voter .site-nav    { background: #174765; }
 body.portal-voter .nav-link:hover { border-bottom-color: #96c8e8; }
+body.portal-voter .nav-link.nav-active { border-bottom-color: #96c8e8; }
 
 /* ============================ Layout ============================ */
 
@@ -236,6 +266,19 @@ input[type="file"] {
     margin: 8px 0 0;
 }
 
+.form-actions-center {
+    justify-content: center;
+    border-top: none;
+    margin-top: 16px;
+}
+
+.section-title {
+    margin: 4px 0 12px;
+    color: var(--navy);
+    font-size: 17px;
+    font-weight: 700;
+}
+
 /* ============================ Buttons ============================ */
 
 .btn,
@@ -334,6 +377,8 @@ table th { background: #f4f6fa; font-weight: 600; color: #343e52; }
 .GridViewStyle tr:nth-child(even) td { background: #f7f9fc; }
 .GridViewStyle tr:hover td { background: #eef3fb; }
 
+.GridViewStyle .btn { padding: 6px 12px; font-size: 13px; margin: 2px 0; }
+
 /* Info/detail table used on status & profile pages */
 .info-table { width: 100%; max-width: 640px; }
 .info-table td { border: none; border-bottom: 1px solid var(--line); }
@@ -406,6 +451,23 @@ table.ballot-list { border-collapse: separate; border-spacing: 0 0; }
 .badge-ok     { background: var(--ok-bg); color: var(--ok); }
 .badge-warn   { background: var(--warn-bg); color: var(--warn); }
 .badge-bad    { background: var(--bad-bg); color: var(--bad); }
+
+.status-badge {
+    display: inline-block;
+    padding: 2px 10px;
+    border-radius: 999px;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: .4px;
+    text-transform: uppercase;
+    white-space: nowrap;
+}
+
+.status-badge.Approved { background: var(--ok-bg); color: var(--ok); }
+.status-badge.Active   { background: var(--ok-bg); color: var(--ok); }
+.status-badge.Pending  { background: var(--warn-bg); color: var(--warn); }
+.status-badge.Declined { background: var(--bad-bg); color: var(--bad); }
+.status-badge.Inactive { background: #edf0f5; color: var(--muted); }
 
 .alert-error, .alert-success { display: block; font-weight: 600; margin: 12px 0; }
 .alert-error { color: var(--bad); }
@@ -531,4 +593,15 @@ body.portal-voter .site-footer { background: #123a54; }
 
 @media (prefers-reduced-motion: reduce) {
     *, *::before, *::after { transition: none !important; }
+}
+
+/* ============================ Print (results pages) ============================ */
+
+@media print {
+    .site-header, .site-nav, .site-footer { display: none; }
+    body { background: #fff; }
+    .container { max-width: none; padding: 0; }
+    .card { box-shadow: none; border: none; }
+    .GridViewStyle th { background: #f4f6fa; color: #343e52; }
+    .GridViewStyle tr:hover td { background: transparent; }
 }

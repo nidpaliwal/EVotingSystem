@@ -40,7 +40,7 @@
                     <ItemTemplate>
                         <label class="ballot-card">
                             <input type="radio" name="PartyChoice" value='<%# Eval("PartyID") %>' data-partyname='<%# Eval("PartyName") %>' />
-                            <img class="party-symbol" src='<%# Eval("SymbolImagePath") %>' alt="Party symbol" />
+                            <img class="party-symbol" src='<%# ResolveUrl(Eval("SymbolImagePath").ToString()) %>' alt="Party symbol" />
                             <span class="party-name"><%# Eval("PartyName") %></span>
                         </label>
                     </ItemTemplate>
