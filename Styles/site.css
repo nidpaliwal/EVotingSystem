@@ -1,0 +1,534 @@
+/* ==========================================================================
+   E-Voting System — site styles
+   Single lightweight stylesheet: no frameworks, no webfonts, no bloat.
+   ========================================================================== */
+
+:root {
+    --navy: #16224a;
+    --navy-soft: #22305c;
+    --accent: #2f6fed;
+    --accent-dark: #1f56c4;
+    --bg: #eef1f6;
+    --card: #ffffff;
+    --text: #1c2333;
+    --muted: #5d6779;
+    --line: #dfe4ec;
+    --ok: #1e7e34;
+    --ok-bg: #e7f6ec;
+    --warn: #a15c00;
+    --warn-bg: #fdf3e0;
+    --bad: #b3261e;
+    --bad-bg: #fdeceb;
+    --radius: 8px;
+}
+
+* { box-sizing: border-box; }
+
+html { -webkit-text-size-adjust: 100%; }
+
+body {
+    margin: 0;
+    font-family: -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+    font-size: 15px;
+    line-height: 1.55;
+    color: var(--text);
+    background: var(--bg);
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+img { max-width: 100%; }
+
+a { color: var(--accent); }
+a:hover { color: var(--accent-dark); }
+
+/* ============================ Header & nav ============================ */
+
+.site-header {
+    background: var(--navy);
+    color: #fff;
+}
+
+.header-inner {
+    max-width: 1080px;
+    margin: 0 auto;
+    padding: 14px 20px 10px;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 6px 16px;
+}
+
+.brand {
+    font-size: 22px;
+    font-weight: 700;
+    letter-spacing: .3px;
+}
+
+.brand small {
+    display: block;
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    opacity: .85;
+}
+
+.portal-chip {
+    margin-left: auto;
+    background: rgba(255,255,255,.14);
+    border: 1px solid rgba(255,255,255,.25);
+    padding: 3px 12px;
+    border-radius: 999px;
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.site-nav {
+    background: var(--navy-soft);
+    border-top: 1px solid rgba(255,255,255,.08);
+}
+
+.nav-inner {
+    max-width: 1080px;
+    margin: 0 auto;
+    padding: 0 20px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2px;
+}
+
+.nav-link {
+    color: #e8ecf6;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 14px;
+    padding: 11px 14px;
+    border-bottom: 3px solid transparent;
+    transition: color .15s, border-color .15s, background .15s;
+}
+
+.nav-link:hover {
+    color: #fff;
+    background: rgba(255,255,255,.08);
+    border-bottom-color: #7fa4f5;
+}
+
+.nav-link:focus-visible {
+    outline: 2px solid #7fa4f5;
+    outline-offset: -2px;
+}
+
+/* Role accents */
+
+body.portal-admin .site-header  { background: #4c1d1d; }
+body.portal-admin .site-nav    { background: #5e2525; }
+body.portal-admin .nav-link:hover { border-bottom-color: #e8a0a0; }
+
+body.portal-party .site-header  { background: #0f4d2e; }
+body.portal-party .site-nav    { background: #135c37; }
+body.portal-party .nav-link:hover { border-bottom-color: #9adcb8; }
+
+body.portal-voter .site-header  { background: #123a54; }
+body.portal-voter .site-nav    { background: #174765; }
+body.portal-voter .nav-link:hover { border-bottom-color: #96c8e8; }
+
+/* ============================ Layout ============================ */
+
+.container {
+    width: 100%;
+    max-width: 1080px;
+    margin: 0 auto;
+    padding: 24px 20px 48px;
+    flex: 1 0 auto;
+}
+
+.page-title {
+    margin: 0 0 18px;
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--navy);
+}
+
+.page-sub { color: var(--muted); margin: -10px 0 20px; }
+
+.card {
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    box-shadow: 0 1px 3px rgba(20,30,60,.06);
+    padding: 22px 24px;
+    margin-bottom: 22px;
+}
+
+.card h3 {
+    margin: 0 0 14px;
+    font-size: 17px;
+    color: var(--navy);
+}
+
+/* ============================ Forms ============================ */
+
+.form-grid {
+    display: grid;
+    grid-template-columns: minmax(150px, 220px) 1fr;
+    gap: 14px 18px;
+    align-items: center;
+}
+
+.form-grid label,
+.form-grid .form-label {
+    font-weight: 600;
+    color: #343e52;
+    text-align: right;
+}
+
+.form-grid label .req { color: var(--bad); }
+
+input[type="text"],
+input[type="password"],
+input[type="email"],
+input[type="date"],
+input[type="number"],
+input[type="datetime-local"],
+select,
+textarea {
+    width: 100%;
+    max-width: 460px;
+    padding: 9px 11px;
+    border: 1px solid #c7cedb;
+    border-radius: 6px;
+    font-size: 14px;
+    font-family: inherit;
+    color: var(--text);
+    background: #fff;
+    transition: border-color .15s, box-shadow .15s;
+}
+
+input:focus, select:focus, textarea:focus {
+    outline: none;
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px rgba(47,111,237,.18);
+}
+
+textarea { resize: vertical; min-height: 70px; }
+
+input[type="file"] {
+    font-size: 14px;
+    color: var(--muted);
+}
+
+.form-actions {
+    margin-top: 20px;
+    padding-top: 16px;
+    border-top: 1px solid var(--line);
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.form-note {
+    font-size: 13px;
+    color: var(--muted);
+    margin: 8px 0 0;
+}
+
+/* ============================ Buttons ============================ */
+
+.btn,
+input[type="submit"],
+input[type="button"] {
+    display: inline-block;
+    background: var(--accent);
+    color: #fff;
+    border: 1px solid var(--accent);
+    border-radius: 6px;
+    padding: 9px 20px;
+    font-size: 14px;
+    font-weight: 600;
+    font-family: inherit;
+    cursor: pointer;
+    text-decoration: none;
+    transition: background .15s, border-color .15s;
+}
+
+.btn:hover, input[type="submit"]:hover, input[type="button"]:hover {
+    background: var(--accent-dark);
+    border-color: var(--accent-dark);
+}
+
+.btn:focus-visible, input:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+}
+
+.btn-lg {
+    padding: 13px 26px;
+    font-size: 16px;
+    width: 100%;
+}
+
+.btn-secondary {
+    background: #fff;
+    color: var(--accent);
+}
+
+.btn-secondary:hover {
+    background: #eef4ff;
+    border-color: var(--accent);
+}
+
+.btn-success { background: var(--ok); border-color: var(--ok); }
+.btn-success:hover { background: #166b2b; border-color: #166b2b; }
+
+.btn-danger { background: var(--bad); border-color: var(--bad); }
+.btn-danger:hover { background: #8e1c15; border-color: #8e1c15; }
+
+/* ============================ Tables ============================ */
+
+.table-wrap { overflow-x: auto; }
+
+table {
+    border-collapse: collapse;
+    width: 100%;
+    background: var(--card);
+}
+
+table td, table th {
+    border: 1px solid var(--line);
+    padding: 10px 12px;
+    text-align: left;
+    vertical-align: middle;
+}
+
+table th { background: #f4f6fa; font-weight: 600; color: #343e52; }
+
+.GridViewStyle {
+    width: 100%;
+    border: 1px solid var(--line);
+    border-radius: 6px;
+    overflow: hidden;
+}
+
+.GridViewStyle th {
+    background: var(--navy);
+    color: #fff;
+    padding: 11px 12px;
+    text-align: left;
+    font-weight: 600;
+    font-size: 13px;
+    letter-spacing: .4px;
+    text-transform: uppercase;
+    white-space: nowrap;
+}
+
+.GridViewStyle td {
+    padding: 10px 12px;
+    border-bottom: 1px solid var(--line);
+    text-align: left;
+}
+
+.GridViewStyle tr:nth-child(even) td { background: #f7f9fc; }
+.GridViewStyle tr:hover td { background: #eef3fb; }
+
+/* Info/detail table used on status & profile pages */
+.info-table { width: 100%; max-width: 640px; }
+.info-table td { border: none; border-bottom: 1px solid var(--line); }
+.info-table td:first-child {
+    font-weight: 600;
+    color: #343e52;
+    width: 220px;
+}
+
+/* ============================ Ballot ============================ */
+
+.ballot-card {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 16px 18px;
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    background: #fff;
+    margin-bottom: 10px;
+    cursor: pointer;
+    transition: border-color .15s, box-shadow .15s;
+}
+
+.ballot-card:hover, .ballot-card:has(input:checked) {
+    border-color: var(--accent);
+    box-shadow: 0 1px 4px rgba(47,111,237,.18);
+}
+
+.ballot-card input[type="radio"] {
+    width: 20px;
+    height: 20px;
+    accent-color: var(--accent);
+    cursor: pointer;
+    flex: 0 0 auto;
+}
+
+.ballot-card .party-symbol {
+    width: 54px;
+    height: 54px;
+    object-fit: contain;
+    flex: 0 0 auto;
+}
+
+.ballot-card .party-name {
+    font-size: 16px;
+    font-weight: 600;
+}
+
+table.ballot-list, table.ballot-list td {
+    border: none;
+    background: transparent;
+    padding: 0;
+}
+
+table.ballot-list { border-collapse: separate; border-spacing: 0 0; }
+
+/* ============================ Status chips / alerts ============================ */
+
+.badge {
+    display: inline-block;
+    padding: 2px 10px;
+    border-radius: 999px;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: .4px;
+    text-transform: uppercase;
+}
+
+.badge-ok     { background: var(--ok-bg); color: var(--ok); }
+.badge-warn   { background: var(--warn-bg); color: var(--warn); }
+.badge-bad    { background: var(--bad-bg); color: var(--bad); }
+
+.alert-error, .alert-success { display: block; font-weight: 600; margin: 12px 0; }
+.alert-error { color: var(--bad); }
+.alert-success { color: var(--ok); }
+
+.lockout-banner {
+    display: block;
+    background: var(--bad-bg);
+    color: var(--bad);
+    border: 1px solid #f3c0bc;
+    border-radius: 6px;
+    padding: 10px 14px;
+    font-weight: 600;
+    margin: 12px 0;
+}
+
+/* ============================ Home / welcome & quick links ============================ */
+
+.quick-links {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+    gap: 14px;
+}
+
+.quick-link {
+    display: block;
+    padding: 18px;
+    background: #fff;
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    color: var(--text);
+    text-decoration: none;
+    font-weight: 600;
+    transition: border-color .15s, transform .15s;
+}
+
+.quick-link:hover {
+    border-color: var(--accent);
+    color: var(--accent-dark);
+    transform: translateY(-1px);
+}
+
+.quick-link span {
+    display: block;
+    font-weight: 400;
+    font-size: 13px;
+    color: var(--muted);
+    margin-top: 4px;
+}
+
+/* ============================ Election history ============================ */
+
+.election-history-item {
+    background: #fff;
+    border: 1px solid var(--line);
+    border-left: 4px solid var(--accent);
+    border-radius: 6px;
+    padding: 14px 18px;
+    margin-bottom: 10px;
+    box-shadow: 0 1px 2px rgba(20,30,60,.05);
+}
+
+.election-history-item a {
+    color: var(--navy);
+    font-weight: 600;
+    text-decoration: none;
+    font-size: 15px;
+}
+
+.election-history-item a:hover { color: var(--accent-dark); text-decoration: underline; }
+
+.history-meta {
+    display: block;
+    font-size: 13px;
+    color: var(--muted);
+    margin-top: 2px;
+}
+
+/* ============================ Choice (register as…) ============================ */
+
+.choice-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 16px;
+    max-width: 640px;
+}
+
+/* ============================ Footer ============================ */
+
+.site-footer {
+    background: var(--navy);
+    color: rgba(255,255,255,.75);
+    font-size: 13px;
+    text-align: center;
+    padding: 16px 20px;
+}
+
+body.portal-admin .site-footer { background: #4c1d1d; }
+body.portal-party .site-footer { background: #0f4d2e; }
+body.portal-voter .site-footer { background: #123a54; }
+
+/* ============================ Login card ============================ */
+
+.login-card { max-width: 420px; margin: 24px auto; }
+
+/* ============================ Responsive ============================ */
+
+@media (max-width: 640px) {
+    .container { padding: 18px 14px 40px; }
+    .form-grid { grid-template-columns: 1fr; gap: 8px; }
+    .form-grid label, .form-grid .form-label { text-align: left; }
+    .brand { font-size: 19px; }
+    .portal-chip { margin-left: 0; }
+    .nav-link { padding: 10px 12px; font-size: 13.5px; }
+    .page-title { font-size: 21px; }
+    .GridViewStyle th { font-size: 12px; }
+    input[type="text"], input[type="password"], textarea, select {
+        max-width: 100%;
+    }
+}
+
+/* ============================ Reduced motion ============================ */
+
+@media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { transition: none !important; }
+}

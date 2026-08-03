@@ -2,46 +2,39 @@
 
 <!DOCTYPE html>
 
-<html>
-    <link href="~/Styles/site.css" rel="stylesheet" type="text/css" />
+<html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
-    <title></title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>E-Voting System</title>
+    <link href="~/Styles/site.css" rel="stylesheet" type="text/css" />
     <asp:ContentPlaceHolder ID="head" runat="server">
     </asp:ContentPlaceHolder>
-    <style type="text/css">
-        .auto-style1 {
-            font-size: x-large;
-        }
-        .auto-style2 {
-            font-size: xx-large;
-        }
-        .auto-style3 {
-            font-size: large;
-        }
-    </style>
 </head>
-<body>
-    <form id="form1" runat="server" enctype="multipart/form-data"><center>
-        <div class="navbar navbar-public">
-            <span class="auto-style2"><strong>E - Voting System</strong></span><br />
-            <span class="auto-style1"><strong>
-            <br />
-            Public Portal<br />
-&nbsp;</strong></span><br />
-            <strong>
-            <span class="auto-style1">
-            <asp:HyperLink ID="HyperLink2" runat="server" CssClass="auto-style3" NavigateUrl="~/VoterInfoPublic.aspx">Voters Info</asp:HyperLink>
-            &nbsp;&nbsp; </span>
-            <asp:HyperLink ID="HyperLink1" runat="server" CssClass="auto-style3" NavigateUrl="~/PartyListPublic.aspx">Party List</asp:HyperLink>
-            <span class="auto-style3">&nbsp;&nbsp;&nbsp;
-            <asp:HyperLink ID="HyperLink5" runat="server" NavigateUrl="~/PublicElectionHistory.aspx">Election Results</asp:HyperLink>
-&nbsp; &nbsp; </span>
-            <asp:HyperLink ID="HyperLink3" runat="server" CssClass="auto-style3" NavigateUrl="~/Login.aspx">Login</asp:HyperLink>
-            <span class="auto-style3">&nbsp;&nbsp;&nbsp; </span>
-            <asp:HyperLink ID="HyperLink4" runat="server" CssClass="auto-style3" NavigateUrl="~/RegisterChoice.aspx">Register</asp:HyperLink>
-            <span class="auto-style3">&nbsp;&nbsp; </span></strong>&nbsp;<asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
+<body class="portal-public">
+    <form id="form1" runat="server" enctype="multipart/form-data">
+        <header class="site-header">
+            <div class="header-inner">
+                <div class="brand">E-Voting System<small>Secure &amp; Transparent Elections</small></div>
+                <span class="portal-chip">Public Portal</span>
+            </div>
+            <nav class="site-nav" aria-label="Main navigation">
+                <div class="nav-inner">
+                    <asp:HyperLink ID="HyperLink2" runat="server" CssClass="nav-link" NavigateUrl="~/VoterInfoPublic.aspx">Voters Info</asp:HyperLink>
+                    <asp:HyperLink ID="HyperLink1" runat="server" CssClass="nav-link" NavigateUrl="~/PartyListPublic.aspx">Party List</asp:HyperLink>
+                    <asp:HyperLink ID="HyperLink5" runat="server" CssClass="nav-link" NavigateUrl="~/PublicElectionHistory.aspx">Election Results</asp:HyperLink>
+                    <asp:HyperLink ID="HyperLink3" runat="server" CssClass="nav-link" NavigateUrl="~/Login.aspx">Login</asp:HyperLink>
+                    <asp:HyperLink ID="HyperLink4" runat="server" CssClass="nav-link" NavigateUrl="~/RegisterChoice.aspx">Register</asp:HyperLink>
+                </div>
+            </nav>
+        </header>
+        <main class="container">
+            <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
             </asp:ContentPlaceHolder>
-        </div></center>
+        </main>
+        <footer class="site-footer">
+            E-Voting System &copy; 2026 &middot; Secure, transparent and accessible elections
+        </footer>
     </form>
 </body>
 </html>

@@ -1,18 +1,8 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site1.Master" AutoEventWireup="true" CodeBehind="Login.aspx.cs" Inherits="EVotingSystem.Login" %>
+﻿<%@ Page Language="C#" MasterPageFile="~/Site1.Master" AutoEventWireup="true" CodeBehind="Login.aspx.cs" Inherits="EVotingSystem.Login" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
-    <style type="text/css">
-        .auto-style4 {
-            width: 100%;
-        }
-        .auto-style5 {
-            width: 229px;
-        }
-    </style>
     <script>
         function togglePassword() {
-
             var txt = document.getElementById("TextBox2");
-
             if (txt.type === "password")
                 txt.type = "text";
             else
@@ -21,28 +11,27 @@
     </script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
-    <p>
-        <strong>
-        <br class="auto-style1" />
-        </strong><span class="auto-style1"><strong>Login</strong></span></p>
-  <center><table border="1">
-        <tr>
-            <td class="auto-style5">Enter E-mail&nbsp; :</td>
-            <td>
-                <asp:TextBox ID="TextBox1" runat="server" Height="20px" style="margin-left: 0px" Width="233px"></asp:TextBox>
-            </td>
-        </tr>
-        <tr>
-            <td class="auto-style5">Enter Password : </td>
-            <td>
-                <asp:TextBox ID="TextBox2" runat="server" TextMode="Password" Height="20px" Width="208px" ClientIDMode="Static"></asp:TextBox>
-                &nbsp;
-                <asp:ImageButton ID="ImageButton1" runat="server" Height="17px" ImageUrl="~/Images/hide.png" OnClientClick="togglePassword(); return false;" style="width: 17px " OnClick="ImageButton1_Click"  />
-                </td>
-        </tr>
-    </table></center>
-    <asp:Label ID="lblLocked" runat="server" ForeColor="Red" Visible="false"
-        Text="Too many failed login attempts. Please try again after 15 minutes."></asp:Label>
-    <br />
-    <asp:Button ID="Button1" runat="server" Text="Login" OnClick="Button1_Click" />
+    <div class="card login-card">
+        <h3>Login to your account</h3>
+        <p class="form-note">Use the credentials you registered with. Voters, parties and admins all sign in here.</p>
+        <div class="form-grid" style="grid-template-columns: 1fr;">
+            <div class="form-grid">
+                <label for="ContentPlaceHolder1_TextBox1">Email</label>
+                <asp:TextBox ID="TextBox1" runat="server" TextMode="Email" MaxLength="100"></asp:TextBox>
+            </div>
+            <div class="form-grid">
+                <label for="TextBox2">Password</label>
+                <div style="display: flex; gap: 8px; align-items: center; max-width: 460px; width: 100%;">
+                    <asp:TextBox ID="TextBox2" runat="server" TextMode="Password" ClientIDMode="Static" MaxLength="128" style="flex: 1;"></asp:TextBox>
+                    <asp:ImageButton ID="ImageButton1" runat="server" Height="20px" ImageUrl="~/Images/hide.png" OnClientClick="togglePassword(); return false;" style="width: 20px;" OnClick="ImageButton1_Click" ToolTip="Show / hide password" />
+                </div>
+            </div>
+        </div>
+        <asp:Label ID="lblLocked" runat="server" CssClass="lockout-banner" Visible="false"
+            Text="Too many failed login attempts. Please try again after 15 minutes."></asp:Label>
+        <div class="form-actions">
+            <asp:Button ID="Button1" runat="server" Text="Login" OnClick="Button1_Click" CssClass="btn btn-lg" />
+        </div>
+        <p class="form-note">New here? <a href="RegisterChoice.aspx">Register as a voter or a party</a>.</p>
+    </div>
 </asp:Content>
