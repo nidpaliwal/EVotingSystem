@@ -111,6 +111,8 @@ namespace EVotingSystem
 
         private static byte[] FromHex(string hex)
         {
+            if (string.IsNullOrEmpty(hex) || hex.Length % 2 != 0)
+                throw new FormatException("Invalid hex length");
             byte[] result = new byte[hex.Length / 2];
             for (int i = 0; i < result.Length; i++)
                 result[i] = Convert.ToByte(hex.Substring(i * 2, 2), 16);
