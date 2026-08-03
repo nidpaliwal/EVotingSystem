@@ -31,7 +31,7 @@
                 </div>
             </nav>
         </header>
-        <main class="container">
+        <main class="container" id="main" tabindex="-1">
             <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
             </asp:ContentPlaceHolder>
         </main>
@@ -39,5 +39,16 @@
             E-Voting System &copy; 2026 &middot; Voter Portal
         </footer>
     </form>
+    <script>
+        var page = location.pathname.split('/').pop().toLowerCase();
+        var links = document.querySelectorAll('.nav-link');
+        for (var i = 0; i < links.length; i++) {
+            var href = links[i].getAttribute('href').split('/').pop().toLowerCase();
+            if (href === page) {
+                links[i].className += ' nav-active';
+                links[i].setAttribute('aria-current', 'page');
+            }
+        }
+    </script>
 </body>
 </html>

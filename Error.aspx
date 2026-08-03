@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="Error.aspx.cs" Inherits="EVotingSystem.Error" %>
+﻿<%@ Page Title="Error" Language="C#" AutoEventWireup="true" CodeBehind="Error.aspx.cs" Inherits="EVotingSystem.Error" %>
 
 <!DOCTYPE html>
 
@@ -6,20 +6,19 @@
 <head runat="server">
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Something went wrong - E-Voting System</title>
-    <link href="~/Styles/site.css" rel="stylesheet" type="text/css" />
-    <style>
-        body { display: block; }
-        .logout-card { text-align: left; }
-    </style>
+    <title>Something went wrong</title>
+    <link href="Styles/site.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
-    <form id="form1" runat="server">
-        <div class="logout-card">
-            <h1>Sorry, something went wrong</h1>
-            <p>An unexpected error occurred while processing your request.</p>
-            <p><a class="btn" href="Login.aspx">Back to Login</a></p>
+    <main class="container">
+        <div class="card login-card">
+            <h3>Sorry, something went wrong</h3>
+            <p class="form-note">An unexpected error occurred while processing your request. Please try again.</p>
+            <div class="form-actions form-actions-center">
+                <a class="btn" href="Login.aspx">Back to Login</a>
+                <a class="btn btn-secondary" href="VoterInfoPublic.aspx">Home</a>
+            </div>
         </div>
-    </form>
+    </main>
 </body>
 </html>
