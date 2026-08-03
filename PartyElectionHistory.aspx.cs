@@ -8,9 +8,9 @@ using System.Web.UI.WebControls;
 
 namespace EVotingSystem
 {
-    public partial class PartyDashboard : System.Web.UI.Page
+    public partial class PartyElectionHistory : System.Web.UI.Page
     {
-        Datacon obj=new Datacon();
+        Datacon obj = new Datacon();
         protected void Page_Load(object sender, EventArgs e)
         {
             if (Session["Role"] == null || Session["Role"].ToString() != "Party")
@@ -21,15 +21,10 @@ namespace EVotingSystem
 
             if (!IsPostBack)
             {
-                string email = Session["Email"].ToString();
-                string s = "SELECT LeaderName,Email FROM Party WHERE Email='" + email + "'";
+                string s = "SELECT ElectionID, Title, StartDate, EndDate, IsActive FROM Election ORDER BY StartDate DESC";
                 DataTable dt = obj.GetData(s);
-
-                if (dt.Rows.Count > 0)
-                {
-                    lblLeaderName.Text = dt.Rows[0]["LeaderName"].ToString();
-                    lblEmail.Text = dt.Rows[0]["Email"].ToString();
-                }
+                Repeater1.DataSource = dt;
+                Repeater1.DataBind();
             }
         }
     }

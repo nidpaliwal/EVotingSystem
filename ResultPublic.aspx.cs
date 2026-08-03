@@ -8,22 +8,17 @@ using System.Web.UI.WebControls;
 
 namespace EVotingSystem
 {
-    public partial class ResultVoter : System.Web.UI.Page
+    public partial class ResultPublic : System.Web.UI.Page
     {
         Datacon obj = new Datacon();
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (Session["Role"] == null || Session["Role"].ToString() != "Voter")
-            {
-                Response.Redirect("Login.aspx");
-                return;
-            }
-
             if (!IsPostBack)
             {
                 LoadResults();
             }
         }
+
         private void LoadResults()
         {
             int electionId;
@@ -84,4 +79,4 @@ namespace EVotingSystem
             GridView1.DataBind();
         }
     }
-}
+    }

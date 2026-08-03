@@ -3,6 +3,7 @@
 <!DOCTYPE html>
 
 <html>
+    <link href="~/Styles/site.css" rel="stylesheet" type="text/css" />
 <head runat="server">
     <title></title>
     <asp:ContentPlaceHolder ID="head" runat="server">
@@ -22,7 +23,7 @@
 </head>
 <body>
     <form id="form1" runat="server"><center>
-        <div>
+        <div class="navbar navbar-voter">
             <br />
             <span class="auto-style2"><strong>E - Voting System</strong></span><br />
             <span class="auto-style1"><strong>
@@ -38,7 +39,7 @@
             <span class="auto-style3">&nbsp;&nbsp;&nbsp; </span>
             <asp:HyperLink ID="HyperLink4" runat="server" CssClass="auto-style3" NavigateUrl="~/VoterStatus.aspx">My Status</asp:HyperLink>
             <span class="auto-style3">&nbsp;&nbsp;&nbsp;
-            <asp:HyperLink ID="HyperLink5" runat="server" NavigateUrl="~/ResultVoter.aspx">Result</asp:HyperLink>
+            <asp:HyperLink ID="HyperLink7" runat="server" NavigateUrl="~/VoterElectionHistory.aspx">Result</asp:HyperLink>
 &nbsp;&nbsp;&nbsp;
             <asp:HyperLink ID="HyperLink6" runat="server" NavigateUrl="~/Logout.aspx">Logout</asp:HyperLink>
 &nbsp;&nbsp; </span></strong>&nbsp;<asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">

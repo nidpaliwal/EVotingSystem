@@ -8,7 +8,7 @@
 
     </p>
     <p>
-        Any eligible citizen [ age above 18 ] can register as a voter on this platform. To register, you will need: your full name, date of birth, address, a valid Voter ID number, and a photo for identity verification.
+        Any eligible citizen [ age above 18 ] can register as a voter on this platform. To register, you will need: your full name, date of birth, address, a valid Voter's Aadhaar ID number, and a photo for identity verification.
     </p>
     <p>
         After submitting your registration, your details are reviewed by an Election Commision (E.C.) Administrator. 
@@ -30,5 +30,5 @@
             <td><asp:Label ID="lblApprovedVoters" runat="server"></asp:Label></td>
         </tr>
     </table>
-    <br />
+<br />
 </asp:Content>

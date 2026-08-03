@@ -14,7 +14,7 @@
     </p>
     <p>
         <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="false" 
-         DataKeyNames="Email" OnRowCommand="GridView1_RowCommand">
+         DataKeyNames="Email" OnRowCommand="GridView1_RowCommand" CssClass="GridViewStyle">
             <Columns>
                 <asp:BoundField DataField="VoterID" Visible="false" />
                 <asp:BoundField DataField="Name" HeaderText="Name" />

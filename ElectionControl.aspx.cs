@@ -41,8 +41,9 @@ namespace EVotingSystem
                 return;
             }
 
-            DateTime startDate = Convert.ToDateTime(TextBoxStart.Text);
-            DateTime endDate = Convert.ToDateTime(TextBoxEnd.Text);
+            DateTime startDate = DateTime.ParseExact(TextBoxStart.Text.Trim(), "yyyy-MM-dd", System.Globalization.CultureInfo.InvariantCulture);
+            DateTime endDate = DateTime.ParseExact(TextBoxEnd.Text.Trim(), "yyyy-MM-dd", System.Globalization.CultureInfo.InvariantCulture);
+
 
             if (endDate <= startDate)
             {
@@ -66,16 +67,36 @@ namespace EVotingSystem
 
             if (e.CommandName == "Activate")
             {
+                // Find the row's new EndDate textbox
+                GridViewRow row = ((Control)e.CommandSource).NamingContainer as GridViewRow;
+                TextBox txtNewEndDate = (TextBox)row.FindControl("txtNewEndDate");
+
+                if (string.IsNullOrWhiteSpace(txtNewEndDate.Text))
+                {
+                    ClientScript.RegisterStartupScript(this.GetType(), "alert", "alert('Please enter a new End Date to reactivate this election.');", true);
+                    BindGrid();
+                    return;
+                }
+
+                DateTime newEndDate = Convert.ToDateTime(txtNewEndDate.Text);
+
+                if (newEndDate <= DateTime.Now)
+                {
+                    ClientScript.RegisterStartupScript(this.GetType(), "alert", "alert('End Date must be in the future to reactivate.');", true);
+                    BindGrid();
+                    return;
+                }
+
                 // Deactivate all elections first
                 obj.SetData("UPDATE Election SET IsActive = 0");
 
-                // Activate the selected one
-                obj.SetData("UPDATE Election SET IsActive = 1 WHERE ElectionID = " + electionId);
+                // Activate this one with the new EndDate
+                obj.SetData("UPDATE Election SET IsActive = 1, EndDate = '" + newEndDate.ToString("yyyy-MM-dd HH:mm:ss") + "' WHERE ElectionID = " + electionId);
 
-                // Fresh voting round — reset everyone's HasVoted for the new election
+                // Fresh voting round
                 obj.SetData("UPDATE Voter SET HasVoted = 0");
 
-                ClientScript.RegisterStartupScript(this.GetType(), "alert", "alert('Election activated. All voters can now vote fresh.');", true);
+                ClientScript.RegisterStartupScript(this.GetType(), "alert", "alert('Election reactivated with new End Date.');", true);
             }
             else if (e.CommandName == "Deactivate")
             {

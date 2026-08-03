@@ -5,39 +5,47 @@
     <p>
         <br />
         <script>
-            function confirmVote() {
-                var radios = document.getElementsByName('PartyChoice');
-                var selected = null;
-                for (var i = 0; i < radios.length; i++) {
-                    if (radios[i].checked) {
-                        selected = radios[i].value;
-                    }
-                }
+function confirmVote() {
+    var radios = document.getElementsByName('PartyChoice');
+    var selectedId = null;
+    var selectedName = null;
 
-                if (selected === null) {
-                    alert("Please select a party before voting.");
-                    return false;
-                }
-                var confirm1 = confirm("You selected Party ID " + selected + ". Continue?");
-                if (!confirm1) return false;
+    for (var i = 0; i < radios.length; i++) {
+        if (radios[i].checked) {
+            selectedId = radios[i].value;
+            selectedName = radios[i].getAttribute('data-partyname');
+        }
+    }
 
-                var confirm2 = confirm("This action is FINAL and cannot be undone. Submit your vote?");
-                if (!confirm2) return false;
+    if (selectedId === null) {
+        alert("Please select a party before voting.");
+        return false;
+    }
+
+    var confirm1 = confirm("You selected " + selectedName + ". Continue?");
+    if (!confirm1) return false;
+
+    var confirm2 = confirm("This action is FINAL and cannot be undone. Submit your vote for " + selectedName + "?");
+    if (!confirm2) return false;
 
                 return true;
             }
     </script>
         <p>Cast Your Vote</p>
+    <p><p><strong>Election:</strong> <asp:Label ID="lblElectionInfo" runat="server"></asp:Label></p>
+    </p>
         <asp:Label ID="lblMessage" runat="server" ForeColor="Red"></asp:Label>
 
     <br />
 
-    <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="false">
+    <br />
+
+    <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="false" CssClass="GridViewStyle">
         <Columns>
             <asp:TemplateField HeaderText="Select">
                 <ItemTemplate>
-                    <input type="radio" name="PartyChoice" value='<%# Eval("PartyID") %>' />
-                </ItemTemplate>
+        <input type="radio" name="PartyChoice" value='<%# Eval("PartyID") %>' data-partyname='<%# Eval("PartyName") %>' />
+    </ItemTemplate>
             </asp:TemplateField>
             <asp:TemplateField HeaderText="Symbol">
                 <ItemTemplate>

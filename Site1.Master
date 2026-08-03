@@ -3,6 +3,7 @@
 <!DOCTYPE html>
 
 <html>
+    <link href="~/Styles/site.css" rel="stylesheet" type="text/css" />
 <head runat="server">
     <title></title>
     <asp:ContentPlaceHolder ID="head" runat="server">
@@ -21,7 +22,7 @@
 </head>
 <body>
     <form id="form1" runat="server" enctype="multipart/form-data"><center>
-        <div>
+        <div class="navbar navbar-public">
             <span class="auto-style2"><strong>E - Voting System</strong></span><br />
             <span class="auto-style1"><strong>
             <br />
@@ -32,7 +33,9 @@
             <asp:HyperLink ID="HyperLink2" runat="server" CssClass="auto-style3" NavigateUrl="~/VoterInfoPublic.aspx">Voters Info</asp:HyperLink>
             &nbsp;&nbsp; </span>
             <asp:HyperLink ID="HyperLink1" runat="server" CssClass="auto-style3" NavigateUrl="~/PartyListPublic.aspx">Party List</asp:HyperLink>
-            <span class="auto-style3">&nbsp;&nbsp;&nbsp; </span>
+            <span class="auto-style3">&nbsp;&nbsp;&nbsp;
+            <asp:HyperLink ID="HyperLink5" runat="server" NavigateUrl="~/PublicElectionHistory.aspx">Election Results</asp:HyperLink>
+&nbsp; &nbsp; </span>
             <asp:HyperLink ID="HyperLink3" runat="server" CssClass="auto-style3" NavigateUrl="~/Login.aspx">Login</asp:HyperLink>
             <span class="auto-style3">&nbsp;&nbsp;&nbsp; </span>
             <asp:HyperLink ID="HyperLink4" runat="server" CssClass="auto-style3" NavigateUrl="~/RegisterChoice.aspx">Register</asp:HyperLink>

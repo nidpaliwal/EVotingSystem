@@ -6,7 +6,7 @@
         <br />
         Party List</p>
     <p>
-        <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="false">
+        <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="false" CssClass="GridViewStyle">
             <Columns>
             <asp:TemplateField HeaderText="Symbol">
                 <ItemTemplate>
@@ -16,6 +16,7 @@
             <asp:BoundField DataField="PartyName" HeaderText="Party Name" />
             <asp:BoundField DataField="LeaderName" HeaderText="Leader Name" />
             <asp:BoundField DataField="Objective" HeaderText="Objective" />
+                <asp:BoundField DataField="LegalHistory" HeaderText="Legal History" />
         </Columns>
         </asp:GridView>
     </p>

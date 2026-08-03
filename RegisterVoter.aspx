@@ -49,7 +49,7 @@
         <tr>
             <td><label>Voter Aadhar ID Number :</label></td>
             <td>
-                <asp:TextBox ID="TextBox4" runat="server"></asp:TextBox>
+                <asp:TextBox ID="TextBox4" runat="server" MaxLength="12" TextMode="Number"></asp:TextBox>
             </td>
         </tr>
         <tr>

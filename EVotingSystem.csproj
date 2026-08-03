@@ -68,6 +68,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="AdminDashboard.aspx" />
+    <Content Include="AdminElectionHistory.aspx" />
     <Content Include="ElectionControl.aspx" />
     <Content Include="Images\hide.png" />
     <Content Include="Login.aspx" />
@@ -76,15 +77,21 @@
     <Content Include="ManageVoters.aspx" />
     <Content Include="MyProfile.aspx" />
     <Content Include="PartyDashboard.aspx" />
+    <Content Include="PartyElectionHistory.aspx" />
     <Content Include="PartyListPublic.aspx" />
     <Content Include="PartyListVoter.aspx" />
     <Content Include="PartyStatus.aspx" />
+    <Content Include="PublicElectionHistory.aspx" />
     <Content Include="RegisterChoice.aspx" />
     <Content Include="RegisterParty.aspx" />
     <Content Include="RegisterVoter.aspx" />
     <Content Include="ResultAdmin.aspx" />
+    <Content Include="ResultParty.aspx" />
+    <Content Include="ResultPublic.aspx" />
     <Content Include="ResultVoter.aspx" />
+    <Content Include="StyleSheet1.css" />
     <Content Include="VoterDashboard.aspx" />
+    <Content Include="VoterElectionHistory.aspx" />
     <Content Include="VoterInfoPublic.aspx" />
     <Content Include="VoterStatus.aspx" />
     <Content Include="VoterVote.aspx" />
@@ -97,6 +104,13 @@
     </Compile>
     <Compile Include="AdminDashboard.aspx.designer.cs">
       <DependentUpon>AdminDashboard.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="AdminElectionHistory.aspx.cs">
+      <DependentUpon>AdminElectionHistory.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="AdminElectionHistory.aspx.designer.cs">
+      <DependentUpon>AdminElectionHistory.aspx</DependentUpon>
     </Compile>
     <Compile Include="Datacon.cs" />
     <Compile Include="ElectionControl.aspx.cs">
@@ -148,6 +162,13 @@
     <Compile Include="PartyDashboard.aspx.designer.cs">
       <DependentUpon>PartyDashboard.aspx</DependentUpon>
     </Compile>
+    <Compile Include="PartyElectionHistory.aspx.cs">
+      <DependentUpon>PartyElectionHistory.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="PartyElectionHistory.aspx.designer.cs">
+      <DependentUpon>PartyElectionHistory.aspx</DependentUpon>
+    </Compile>
     <Compile Include="PartyListPublic.aspx.cs">
       <DependentUpon>PartyListPublic.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -170,6 +191,13 @@
       <DependentUpon>PartyStatus.aspx</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="PublicElectionHistory.aspx.cs">
+      <DependentUpon>PublicElectionHistory.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="PublicElectionHistory.aspx.designer.cs">
+      <DependentUpon>PublicElectionHistory.aspx</DependentUpon>
+    </Compile>
     <Compile Include="RegisterChoice.aspx.cs">
       <DependentUpon>RegisterChoice.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -196,6 +224,20 @@
     </Compile>
     <Compile Include="ResultAdmin.aspx.designer.cs">
       <DependentUpon>ResultAdmin.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ResultParty.aspx.cs">
+      <DependentUpon>ResultParty.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ResultParty.aspx.designer.cs">
+      <DependentUpon>ResultParty.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ResultPublic.aspx.cs">
+      <DependentUpon>ResultPublic.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ResultPublic.aspx.designer.cs">
+      <DependentUpon>ResultPublic.aspx</DependentUpon>
     </Compile>
     <Compile Include="ResultVoter.aspx.cs">
       <DependentUpon>ResultVoter.aspx</DependentUpon>
@@ -238,6 +280,13 @@
     </Compile>
     <Compile Include="VoterDashboard.aspx.designer.cs">
       <DependentUpon>VoterDashboard.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="VoterElectionHistory.aspx.cs">
+      <DependentUpon>VoterElectionHistory.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="VoterElectionHistory.aspx.designer.cs">
+      <DependentUpon>VoterElectionHistory.aspx</DependentUpon>
     </Compile>
     <Compile Include="VoterInfoPublic.aspx.cs">
       <DependentUpon>VoterInfoPublic.aspx</DependentUpon>

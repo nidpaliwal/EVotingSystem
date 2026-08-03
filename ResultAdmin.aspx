@@ -10,9 +10,9 @@
         <asp:Label ID="lblMessage" runat="server" ForeColor="Red"></asp:Label>
 
     </p>
-    <p>
+<p>
 
-    <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="false">
+    <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="false" CssClass="GridViewStyle">
         <Columns>
             <asp:TemplateField HeaderText="Symbol">
                 <ItemTemplate>

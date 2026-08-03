@@ -8,12 +8,12 @@ using System.Web.UI.WebControls;
 
 namespace EVotingSystem
 {
-    public partial class ResultVoter : System.Web.UI.Page
+    public partial class ResultParty : System.Web.UI.Page
     {
         Datacon obj = new Datacon();
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (Session["Role"] == null || Session["Role"].ToString() != "Voter")
+            if (Session["Role"] == null || Session["Role"].ToString() != "Party")
             {
                 Response.Redirect("Login.aspx");
                 return;
@@ -24,6 +24,7 @@ namespace EVotingSystem
                 LoadResults();
             }
         }
+
         private void LoadResults()
         {
             int electionId;
@@ -63,12 +64,14 @@ namespace EVotingSystem
 
             if (isOngoing)
             {
+                lblMessage.ForeColor = System.Drawing.Color.Red;
                 lblMessage.Text = "Result will be out soon. \"" + title + "\" is currently in progress.";
                 GridView1.Visible = false;
                 return;
             }
 
             GridView1.Visible = true;
+            lblMessage.ForeColor = System.Drawing.Color.Black;
             lblMessage.Text = "Results for: " + title;
 
             string resultsQuery = @"

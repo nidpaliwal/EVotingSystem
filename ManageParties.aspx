@@ -17,7 +17,7 @@
         &nbsp;</p>
     <p>
         <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="false" 
-    DataKeyNames="Email" OnRowCommand="GridView1_RowCommand">
+    DataKeyNames="Email" OnRowCommand="GridView1_RowCommand" CssClass="GridViewStyle">
             <Columns>
         <asp:BoundField DataField="PartyID" Visible="false" />
         <asp:BoundField DataField="PartyName" HeaderText="Party Name" />

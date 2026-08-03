@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.IO;
 using System.Linq;
 using System.Security.Cryptography;
@@ -45,6 +46,29 @@ namespace EVotingSystem
                 "alert",
                 "alert('Please fill all the fields.');",
                 true);
+                return;
+            }
+            // Age validation — must be at least 18 years old
+            DateTime dob = Convert.ToDateTime(TextBox2.Text.Trim()); // adjust TextBox2 to your actual DOB field
+            DateTime today = DateTime.Today;
+            int age = today.Year - dob.Year;
+            if (dob.Date > today.AddYears(-age)) age--; // adjusts if birthday hasn't occurred yet this year
+
+            if (age < 18)
+            {
+                ClientScript.RegisterStartupScript(this.GetType(), "alert", "alert('You must be at least 18 years old to register as a voter.');", true);
+                return;
+            }
+
+            // Existing email check (keep as-is)...
+
+            // New: Check duplicate Aadhar/VoterIDNumber
+            string aadharCheck = "SELECT VoterID FROM Voter WHERE VoterIDNumber='" + TextBox4.Text.Trim() + "'";
+            DataTable dtAadhar = obj.GetData(aadharCheck);
+
+            if (dtAadhar.Rows.Count > 0)
+            {
+                ClientScript.RegisterStartupScript(this.GetType(), "alert", "alert('This Aadhar ID is already registered.');", true);
                 return;
             }
 

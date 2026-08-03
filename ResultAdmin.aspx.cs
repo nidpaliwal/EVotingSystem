@@ -27,45 +27,53 @@ namespace EVotingSystem
 
         private void LoadResults()
         {
-            string electionQuery = "SELECT TOP 1 ElectionID FROM Election ORDER BY StartDate DESC";
+            int electionId;
+
+            if (Request.QueryString["id"] != null)
+            {
+                electionId = Convert.ToInt32(Request.QueryString["id"]);
+            }
+            else
+            {
+                string fallbackQuery = "SELECT TOP 1 ElectionID FROM Election ORDER BY StartDate DESC";
+                DataTable dtFallback = obj.GetData(fallbackQuery);
+                if (dtFallback.Rows.Count == 0)
+                {
+                    lblMessage.Text = "No election found.";
+                    GridView1.Visible = false;
+                    return;
+                }
+                electionId = Convert.ToInt32(dtFallback.Rows[0]["ElectionID"]);
+            }
+
+            string electionQuery = "SELECT Title FROM Election WHERE ElectionID=" + electionId;
             DataTable dtElection = obj.GetData(electionQuery);
 
             if (dtElection.Rows.Count == 0)
             {
-                lblMessage.Text = "No election found.";
+                lblMessage.Text = "Election not found.";
                 GridView1.Visible = false;
                 return;
             }
 
-            int electionId = Convert.ToInt32(dtElection.Rows[0]["ElectionID"]);
+            string title = dtElection.Rows[0]["Title"].ToString();
+            // No "ongoing" check here — Admin always sees live results, even mid-election
+            GridView1.Visible = true;
+            lblMessage.ForeColor = System.Drawing.Color.Black;
+            lblMessage.Text = "Results for: " + title;
 
             string resultsQuery = @"
-
                 SELECT p.PartyName, p.SymbolImagePath, COUNT(v.VoteID) AS VoteCount
-
                 FROM Party p
-
                 LEFT JOIN Votes v ON p.PartyID = v.PartyID AND v.ElectionID = " + electionId + @"
-
                 WHERE p.Status = 'Approved'
-
                 GROUP BY p.PartyName, p.SymbolImagePath
-
                 ORDER BY VoteCount DESC";
 
-
-
             DataTable dtResults = obj.GetData(resultsQuery);
-
-            GridView1.Visible = true;
-
-            lblMessage.Text = "";
-
             GridView1.DataSource = dtResults;
-
             GridView1.DataBind();
-
         }
 
     }
-}
+    }

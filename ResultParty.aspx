@@ -1,15 +1,12 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site4Voter.Master" AutoEventWireup="true" CodeBehind="ResultVoter.aspx.cs" Inherits="EVotingSystem.ResultVoter" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site3Party.Master" AutoEventWireup="true" CodeBehind="ResultParty.aspx.cs" Inherits="EVotingSystem.ResultParty" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <p>
-    <br />
-    Result</p>
-<p>
-    <asp:Label ID="lblMessage" runat="server" ForeColor="Red"></asp:Label>
-
-    </p>
-<p>
+        <br />
+        Election Results</p>
+    <p>
+        <asp:Label ID="lblMessage" runat="server" ForeColor="Red"></asp:Label>
 
     <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="false" CssClass="GridViewStyle">
         <Columns>

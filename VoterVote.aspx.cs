@@ -29,7 +29,6 @@ namespace EVotingSystem
         {
             string email = Session["Email"].ToString();
 
-            // Check voter status and HasVoted
             string voterQuery = "SELECT Status, HasVoted FROM Voter WHERE Email='" + email + "'";
             DataTable dtVoter = obj.GetData(voterQuery);
 
@@ -60,8 +59,8 @@ namespace EVotingSystem
                 return;
             }
 
-            // Check active election
-            string electionQuery = "SELECT ElectionID FROM Election WHERE IsActive=1";
+            // Check active election + get its Title/dates for display
+            string electionQuery = "SELECT ElectionID, Title, StartDate, EndDate FROM Election WHERE IsActive=1";
             DataTable dtElection = obj.GetData(electionQuery);
 
             if (dtElection.Rows.Count == 0)
@@ -71,6 +70,12 @@ namespace EVotingSystem
                 ButtonVote.Visible = false;
                 return;
             }
+
+            string title = dtElection.Rows[0]["Title"].ToString();
+            DateTime startDate = Convert.ToDateTime(dtElection.Rows[0]["StartDate"]);
+            DateTime endDate = Convert.ToDateTime(dtElection.Rows[0]["EndDate"]);
+
+            lblElectionInfo.Text = title + " (" + startDate.ToString("dd-MMM-yyyy hh:mm tt") + " to " + endDate.ToString("dd-MMM-yyyy hh:mm tt") + ")";
 
             // All checks passed — load approved parties
             string partyQuery = "SELECT PartyID, PartyName, SymbolImagePath FROM Party WHERE Status='Approved'";

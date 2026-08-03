@@ -13,7 +13,7 @@
     <p>
     <br />
     Election Control</p>
-    <table class="auto-style4">
+    <table border="1">
         <tr>
             <td>Election Title :</td>
             <td>
@@ -23,13 +23,13 @@
         <tr>
             <td>Start Date :</td>
             <td>
-                <asp:TextBox ID="TextBoxStart" runat="server"></asp:TextBox>
+                <asp:TextBox ID="TextBoxStart" runat="server" TextMode="Date"></asp:TextBox>
             </td>
         </tr>
         <tr>
             <td class="auto-style5">End Date :</td>
             <td class="auto-style5">
-                <asp:TextBox ID="TextBoxEnd" runat="server"></asp:TextBox>
+                <asp:TextBox ID="TextBoxEnd" runat="server" TextMode="Date"></asp:TextBox>
             </td>
         </tr>
     </table>
@@ -40,7 +40,7 @@
     Existing Elections<br />
     <br />
     <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="false" 
-        DataKeyNames="ElectionID" OnRowCommand="GridView1_RowCommand">
+        DataKeyNames="ElectionID" OnRowCommand="GridView1_RowCommand" CssClass="GridViewStyle">
         <Columns>
             <asp:BoundField DataField="ElectionID" Visible="false" />
             <asp:BoundField DataField="Title" HeaderText="Title" />
@@ -49,9 +49,11 @@
             <asp:BoundField DataField="IsActive" HeaderText="Active" />
             <asp:TemplateField HeaderText="Action">
                 <ItemTemplate>
+                   <asp:TextBox ID="txtNewEndDate" runat="server" TextMode="DateTime"></asp:TextBox>
                     <asp:Button ID="btnActivate" runat="server" Text="Set Active" CommandName="Activate" CommandArgument='<%# Eval("ElectionID") %>' />
                     <asp:Button ID="btnDeactivate" runat="server" Text="Deactivate" CommandName="Deactivate" CommandArgument='<%# Eval("ElectionID") %>' />
-                </ItemTemplate>
+               
+                    </ItemTemplate>
             </asp:TemplateField>
         </Columns>
     </asp:GridView>

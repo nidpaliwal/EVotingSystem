@@ -11,17 +11,8 @@ namespace EVotingSystem
 {
 
 
-    public partial class VoterVote
+    public partial class ResultParty
     {
-
-        /// <summary>
-        /// lblElectionInfo control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblElectionInfo;
 
         /// <summary>
         /// lblMessage control.
@@ -40,14 +31,5 @@ namespace EVotingSystem
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.GridView GridView1;
-
-        /// <summary>
-        /// ButtonVote control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button ButtonVote;
     }
 }

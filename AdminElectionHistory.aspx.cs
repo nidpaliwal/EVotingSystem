@@ -1,21 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Data.SqlTypes;
 using System.Linq;
-using System.Net.NetworkInformation;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
 namespace EVotingSystem
 {
-    public partial class PartyListVoter : System.Web.UI.Page
+    public partial class AdminElectionHistory : System.Web.UI.Page
     {
         Datacon obj = new Datacon();
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (Session["Role"] == null || Session["Role"].ToString() != "Voter")
+            if (Session["Role"] == null || Session["Role"].ToString() != "Admin")
             {
                 Response.Redirect("Login.aspx");
                 return;
@@ -23,10 +21,10 @@ namespace EVotingSystem
 
             if (!IsPostBack)
             {
-                string s = "SELECT PartyName, LeaderName, Objective, LegalHistory, SymbolImagePath FROM Party WHERE Status='Approved'"; 
+                string s = "SELECT ElectionID, Title, StartDate, EndDate, IsActive FROM Election ORDER BY StartDate DESC";
                 DataTable dt = obj.GetData(s);
-                GridView1.DataSource = dt;
-                GridView1.DataBind();
+                Repeater1.DataSource = dt;
+                Repeater1.DataBind();
             }
         }
     }

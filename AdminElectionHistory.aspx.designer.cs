@@ -11,25 +11,16 @@ namespace EVotingSystem
 {
 
 
-    public partial class PartyDashboard
+    public partial class AdminElectionHistory
     {
 
         /// <summary>
-        /// lblLeaderName control.
+        /// Repeater1 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblLeaderName;
-
-        /// <summary>
-        /// lblEmail control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblEmail;
+        protected global::System.Web.UI.WebControls.Repeater Repeater1;
     }
 }

@@ -61,11 +61,15 @@ namespace EVotingSystem
 
             string updateSql = "UPDATE Party SET Objective='" + TextBoxObjective.Text.Replace("'", "''")
                 + "', LegalHistory='" + TextBoxLegalHistory.Text.Replace("'", "''")
-                + "' WHERE Email='" + email + "'";
+                + "', Status='Pending', DeclineReason=NULL"
+                + " WHERE Email='" + email + "'";
 
             obj.SetData(updateSql);
 
-            ClientScript.RegisterStartupScript(this.GetType(), "alert", "alert('Profile updated successfully.');", true);
+            ClientScript.RegisterStartupScript(this.GetType(), "alert", "alert('Profile updated. Your changes have been submitted for Admin re-approval.');", true);
+
+            // Refresh the displayed labels to reflect the new Pending status
+            LoadProfile();
         }
     }
 }

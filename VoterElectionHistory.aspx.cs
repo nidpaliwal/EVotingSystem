@@ -8,7 +8,7 @@ using System.Web.UI.WebControls;
 
 namespace EVotingSystem
 {
-    public partial class VoterDashboard : System.Web.UI.Page
+    public partial class VoterElectionHistory : System.Web.UI.Page
     {
         Datacon obj=new Datacon();
         protected void Page_Load(object sender, EventArgs e)
@@ -21,16 +21,10 @@ namespace EVotingSystem
 
             if (!IsPostBack)
             {
-                string email = Session["Email"].ToString();
-                string s = "SELECT Name,Email,VoterID FROM Voter WHERE Email='" + email + "'";
+                string s = "SELECT ElectionID, Title, StartDate, EndDate, IsActive FROM Election ORDER BY StartDate DESC";
                 DataTable dt = obj.GetData(s);
-
-                if (dt.Rows.Count > 0)
-                {
-                    lblName.Text = dt.Rows[0]["Name"].ToString();
-                    lblEmail.Text = dt.Rows[0]["Email"].ToString();
-                    lblVoterID.Text = dt.Rows[0]["VoterID"].ToString();
-                }
+                Repeater1.DataSource = dt;
+                Repeater1.DataBind();
             }
         }
     }
