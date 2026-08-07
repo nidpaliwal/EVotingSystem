@@ -15,7 +15,7 @@ namespace EVotingSystem
         {
             if (!IsPostBack)
             {
-                string s = "SELECT PartyName, LeaderName, Objective, LegalHistory, SymbolImagePath FROM Party WHERE Status='Approved'";
+                string s = "SELECT PartyName, LeaderName, Objective, LegalHistory, SymbolImagePath, LeaderPhotoPath FROM Party WHERE Status='Approved'";
                 DataTable dt = obj.GetData(s);
                 GridView1.DataSource = dt;
                 GridView1.DataBind();

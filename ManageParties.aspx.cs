@@ -26,7 +26,7 @@ namespace EVotingSystem
             }
             if (!IsPostBack)
             {
-                string s = "SELECT PartyID,PartyName,LeaderName,Status,Email,Phone,SymbolImagePath,Objective,LegalHistory from Party";
+                string s = "SELECT PartyID,PartyName,LeaderName,Status,Email,Phone,SymbolImagePath,LeaderPhotoPath,Objective,LegalHistory from Party";
                 DataTable dt = new DataTable();
                 dt = obj.GetData(s);
                 if (dt != null)
@@ -44,12 +44,26 @@ namespace EVotingSystem
 
         protected void Button1_Click(object sender, EventArgs e)
         {
-            string s = "SELECT PartyID,PartyName,LeaderName,Status,Email,Phone,SymbolImagePath,Objective,LegalHistory from Party where PartyName like @Search or CAST(PartyId as varchar) like @Search";
-            DataTable dt = obj.GetData(s, new SqlParameter("@Search", "%" + TextBox1.Text + "%"));
-            if (dt != null)
+            string term = TextBox1.Text;
+            if (string.IsNullOrEmpty(term)) term = "";
+
+            // Defensive cap: oversized inputs would otherwise crash the
+            // query (un-sized SqlParameter defaults to nvarchar(4000)).
+            if (term.Length > 200) term = term.Substring(0, 200);
+
+            string s = "SELECT PartyID,PartyName,LeaderName,Status,Email,Phone,SymbolImagePath,LeaderPhotoPath,Objective,LegalHistory from Party where PartyName like @Search or CAST(PartyId as varchar) like @Search";
+            try
             {
-                GridView1.DataSource = dt;
-                GridView1.DataBind();
+                DataTable dt = obj.GetData(s, new SqlParameter("@Search", SqlDbType.NVarChar, -1) { Value = "%" + term + "%" });
+                if (dt != null)
+                {
+                    GridView1.DataSource = dt;
+                    GridView1.DataBind();
+                }
+            }
+            catch (SqlException)
+            {
+                ClientScript.RegisterStartupScript(GetType(), "Alert", "alert('Search failed. Please try again.');", true);
             }
         }
 
@@ -88,6 +102,14 @@ namespace EVotingSystem
             else if (e.CommandName == "Decline")
             {
                 string reason = hdnDeclineReason.Value;
+
+                // Server-side enforcement: a decline always needs a reason
+                // (client-side prompt can be bypassed with a direct POST).
+                if (string.IsNullOrWhiteSpace(reason))
+                {
+                    ClientScript.RegisterStartupScript(this.GetType(), "alert", "alert('Please provide a reason for declining.');", true);
+                    return;
+                }
 
                 string updateSql = "UPDATE Party SET Status='Declined', DeclineReason=@Reason WHERE Email=@Email";
                 obj.SetData(updateSql,

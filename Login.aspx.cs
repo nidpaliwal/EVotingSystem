@@ -50,12 +50,20 @@ namespace EVotingSystem
             string email = TextBox1.Text.Trim();
             string password = TextBox2.Text.Trim();
 
+            // Defensive caps: prevents oversized values reaching the DB
+            // (un-sized SqlParameter defaults to nvarchar(4000) -> 500).
+            if (email.Length > 100 || password.Length > 128)
+            {
+                LoginGuard.RegisterFailure(ClientIp);
+                ClientScript.RegisterStartupScript(this.GetType(), "alert", "alert('Invalid Email or Password.');", true);
+                return;
+            }
+
             if (TryLogin("Admin", "Admin", email, password, "AdminDashboard.aspx")
                 || TryLogin("Party", "Party", email, password, "PartyDashboard.aspx")
                 || TryLogin("Voter", "Voter", email, password, "VoterDashboard.aspx"))
             {
-                LoginGuard.Clear(ClientIp);
-                return; // TryLogin already redirected
+                return; // TryLogin already cleared the lockout and redirected
             }
 
             LoginGuard.RegisterFailure(ClientIp);
@@ -88,6 +96,11 @@ namespace EVotingSystem
                     new SqlParameter("@Hash", newHash),
                     new SqlParameter("@Email", email));
             }
+
+            // Reset the per-IP failure counter BEFORE the redirect: the
+            // redirect below terminates the request (ThreadAbortException),
+            // so any code after it never runs.
+            LoginGuard.Clear(ClientIp);
 
             Session["Role"] = role;
             Session["Email"] = email;

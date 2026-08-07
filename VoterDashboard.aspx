@@ -17,9 +17,11 @@
     </div>
     <h3 class="section-title">Quick actions</h3>
     <div class="quick-links">
-        <a class="quick-link" href="VoterVote.aspx">Vote Now<span>Cast your vote in the active election</span></a>
+        <a class="quick-link" href="VoterVote.aspx">Vote Now<span>Cast your vote in an active election</span></a>
+        <a class="quick-link" href="VoterVoteHistory.aspx">Vote History<span>See which elections you voted in and when</span></a>
         <a class="quick-link" href="VoterStatus.aspx">My Status<span>Check your registration and voting status</span></a>
         <a class="quick-link" href="PartyListVoter.aspx">Party List<span>View registered parties and symbols</span></a>
+        <a class="quick-link" href="VoterParticipants.aspx">Participants<span>View approved voters eligible to participate</span></a>
         <a class="quick-link" href="VoterElectionHistory.aspx">Results<span>See election results after voting closes</span></a>
     </div>
 </asp:Content>

@@ -6,7 +6,7 @@
     <div class="card">
         <div class="search-row">
             <asp:Label ID="Label1" runat="server" Text="Enter Voter Name / ID:"></asp:Label>
-            <asp:TextBox ID="TextBox1" runat="server"></asp:TextBox>
+            <asp:TextBox ID="TextBox1" runat="server" MaxLength="200"></asp:TextBox>
             <asp:Button ID="Button1" runat="server" OnClick="Button1_Click" Text="Search" CssClass="btn" />
         </div>
     </div>

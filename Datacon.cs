@@ -51,14 +51,18 @@ namespace EVotingSystem
 
         /// <summary>
         /// Records a vote atomically: re-verifies eligibility inside a
-        /// transaction with a row lock (closes the check-then-act race),
-        /// inserts the vote tied to the voter, and marks the voter as
-        /// having voted. The UNIQUE(ElectionID, VoterID) constraint is
-        /// the final backstop against double voting.
+        /// transaction with row locks (closes the check-then-act race),
+        /// inserts the vote tied to the voter and to the given election.
+        /// The UNIQUE(ElectionID, VoterID) constraint is the final
+        /// backstop against double voting in the same election; this method
+        /// also makes sure that constraint exists (idempotently) so the
+        /// guarantee holds even if a deployment never ran the migration.
         /// </summary>
         /// <returns>null on success, otherwise a user-facing error message.</returns>
-        public string CastVote(int voterId, int partyId)
+        public string CastVote(int voterId, int partyId, int electionId)
         {
+            EnsureVoteIntegrity();
+
             SqlConnection conn = new SqlConnection(con.ConnectionString);
             SqlTransaction tx = null;
             try
@@ -69,7 +73,7 @@ namespace EVotingSystem
                 // 1. Lock the voter row so concurrent vote requests from
                 //    the same voter are serialized, not double-processed.
                 SqlCommand voterCmd = new SqlCommand(
-                    "SELECT Status, HasVoted FROM Voter WITH (UPDLOCK, HOLDLOCK) WHERE VoterID=@voterId",
+                    "SELECT Status FROM Voter WITH (UPDLOCK, HOLDLOCK) WHERE VoterID=@voterId",
                     conn, tx);
                 voterCmd.Parameters.AddWithValue("@voterId", voterId);
 
@@ -79,21 +83,28 @@ namespace EVotingSystem
                         return "Voter record not found.";
                     if (rd["Status"].ToString() != "Approved")
                         return "Your registration is not approved. You cannot vote.";
-                    if (Convert.ToBoolean(rd["HasVoted"]))
-                        return "You have already voted.";
                 }
 
-                // 2. There must be an active election whose voting window
-                //    (StartDate..EndDate) covers the current time.
+                // 2. The chosen election must be active and its voting
+                //    window (StartDate..EndDate) must cover the current time.
                 SqlCommand electionCmd = new SqlCommand(
-                    "SELECT TOP 1 ElectionID FROM Election WITH (UPDLOCK) WHERE IsActive=1 AND GETDATE() BETWEEN StartDate AND EndDate",
+                    "SELECT ElectionID FROM Election WITH (UPDLOCK) WHERE ElectionID=@electionId AND IsActive=1 AND GETDATE() BETWEEN StartDate AND EndDate",
                     conn, tx);
+                electionCmd.Parameters.AddWithValue("@electionId", electionId);
                 object electionResult = electionCmd.ExecuteScalar();
                 if (electionResult == null || electionResult == DBNull.Value)
                     return "The election is not currently open for voting.";
-                int electionId = Convert.ToInt32(electionResult);
 
-                // 3. The selected party must exist and be approved.
+                // 3. The voter must not have already voted in this election.
+                SqlCommand votedCmd = new SqlCommand(
+                    "SELECT COUNT(*) FROM Votes WITH (UPDLOCK, HOLDLOCK) WHERE ElectionID=@electionId AND VoterID=@voterId",
+                    conn, tx);
+                votedCmd.Parameters.AddWithValue("@electionId", electionId);
+                votedCmd.Parameters.AddWithValue("@voterId", voterId);
+                if (Convert.ToInt32(votedCmd.ExecuteScalar()) > 0)
+                    return "You have already voted in this election.";
+
+                // 4. The selected party must exist and be approved.
                 SqlCommand partyCmd = new SqlCommand(
                     "SELECT COUNT(*) FROM Party WHERE PartyID=@partyId AND Status='Approved'",
                     conn, tx);
@@ -101,7 +112,7 @@ namespace EVotingSystem
                 if (Convert.ToInt32(partyCmd.ExecuteScalar()) == 0)
                     return "The selected party is not eligible.";
 
-                // 4. Record the vote.
+                // 5. Record the vote.
                 SqlCommand insertCmd = new SqlCommand(
                     "INSERT INTO Votes (ElectionID, PartyID, VoterID, VotedOn) VALUES (@electionId, @partyId, @voterId, GETDATE())",
                     conn, tx);
@@ -110,7 +121,8 @@ namespace EVotingSystem
                 insertCmd.Parameters.AddWithValue("@voterId", voterId);
                 insertCmd.ExecuteNonQuery();
 
-                // 5. Mark the voter as having voted.
+                // 6. Mark the voter as having voted (legacy summary flag;
+                //    per-election eligibility is enforced via the Votes table).
                 SqlCommand updateCmd = new SqlCommand(
                     "UPDATE Voter SET HasVoted=1 WHERE VoterID=@voterId",
                     conn, tx);
@@ -124,7 +136,7 @@ namespace EVotingSystem
             {
                 if (tx != null) tx.Rollback();
                 if (ex.Number == 2601 || ex.Number == 2627) // duplicate key
-                    return "You have already voted.";
+                    return "You have already voted in this election.";
                 throw;
             }
             finally
@@ -132,5 +144,84 @@ namespace EVotingSystem
                 if (conn != null) conn.Dispose();
             }
         }
+
+        // Runs once per process: guarantees the UNIQUE(ElectionID, VoterID)
+        // index on Votes exists so one voter can never cast more than one
+        // vote in the same election, even on databases where the migration
+        // was not applied. Mirrors Database/Migration_01_Votes_VoterID.sql.
+        private static bool _voteIntegrityChecked;
+        private static readonly object VoteIntegrityLock = new object();
+
+        private void EnsureVoteIntegrity()
+        {
+            if (_voteIntegrityChecked) return;
+
+            lock (VoteIntegrityLock)
+            {
+                if (_voteIntegrityChecked) return;
+
+                if (TableExists("Votes") && !ColumnExists("Votes", "VoterID"))
+                {
+                    // Votes has no VoterID yet (pre-migration database):
+                    // legacy rows cannot be attributed to anyone, so drop
+                    // them, add the column, then add the unique constraint.
+                    using (SqlConnection conn = new SqlConnection(con.ConnectionString))
+                    {
+                        conn.Open();
+                        SqlCommand cmd = new SqlCommand(
+                            "DELETE FROM Votes; ALTER TABLE Votes ADD VoterID int NOT NULL;",
+                            conn);
+                        cmd.ExecuteNonQuery();
+                    }
+                }
+
+EnsureVotesUniqueConstraint();
+                _voteIntegrityChecked = true;
+            }
+        }
+
+        private bool TableExists(string table)
+        {
+            using (SqlConnection conn = new SqlConnection(con.ConnectionString))
+            {
+                conn.Open();
+                SqlCommand cmd = new SqlCommand(
+                    "SELECT COUNT(*) FROM sys.tables WHERE name=@name",
+                    conn);
+                cmd.Parameters.AddWithValue("@name", table);
+                return Convert.ToInt32(cmd.ExecuteScalar()) > 0;
+            }
+        }
+
+        private bool ColumnExists(string table, string column)
+        {
+            using (SqlConnection conn = new SqlConnection(con.ConnectionString))
+            {
+                conn.Open();
+                SqlCommand cmd = new SqlCommand(
+                    "SELECT COUNT(*) FROM sys.columns WHERE object_id=OBJECT_ID(@table) AND name=@column",
+                    conn);
+                cmd.Parameters.AddWithValue("@table", table);
+                cmd.Parameters.AddWithValue("@column", column);
+                return Convert.ToInt32(cmd.ExecuteScalar()) > 0;
+            }
+        }
+
+        private void EnsureVotesUniqueConstraint()
+        {
+            using (SqlConnection conn = new SqlConnection(con.ConnectionString))
+            {
+                conn.Open();
+                SqlCommand cmd = new SqlCommand(
+                    @"IF NOT EXISTS (SELECT 1 FROM sys.indexes
+                                     WHERE name = 'UQ_Votes_ElectionVoter' AND object_id = OBJECT_ID('Votes'))
+                      BEGIN
+                          ALTER TABLE Votes ADD CONSTRAINT UQ_Votes_ElectionVoter UNIQUE (ElectionID, VoterID);
+                      END",
+                    conn);
+                cmd.ExecuteNonQuery();
+            }
+        }
     }
 }
+

@@ -9,6 +9,7 @@ using System.Text;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using System.Text.RegularExpressions;
 using System.Xml.Linq;
 
 namespace EVotingSystem
@@ -133,8 +134,8 @@ namespace EVotingSystem
         Datacon obj = new Datacon();
         protected void Page_Load(object sender, EventArgs e)
         {
-            
-        
+           
+
         }
 
         protected void Button1_Click(object sender, EventArgs e)
@@ -147,6 +148,28 @@ namespace EVotingSystem
                 "alert",
                 "alert('Please fill all the fields.');",
                 true);
+                return;
+            }
+
+            // Server-side format validation (cannot be bypassed via direct POST)
+            if (string.IsNullOrWhiteSpace(TextBox6.Text))
+            {
+                ClientScript.RegisterStartupScript(this.GetType(), "alert", "alert('Password cannot be empty.');", true);
+                return;
+            }
+            if (!Regex.IsMatch(TextBox5.Text.Trim(), @"^[^@\s]+@[^@\s]+\.[^@\s]+$"))
+            {
+                ClientScript.RegisterStartupScript(this.GetType(), "alert", "alert('Please enter a valid email address.');", true);
+                return;
+            }
+            if (!Regex.IsMatch(TextBox4.Text.Trim(), @"^\d{12}$"))
+            {
+                ClientScript.RegisterStartupScript(this.GetType(), "alert", "alert('Aadhaar ID must be exactly 12 digits.');", true);
+                return;
+            }
+            if (!Regex.IsMatch(TextBox7.Text.Trim(), @"^\d{10,15}$"))
+            {
+                ClientScript.RegisterStartupScript(this.GetType(), "alert", "alert('Phone number must contain 10 to 15 digits.');", true);
                 return;
             }
 

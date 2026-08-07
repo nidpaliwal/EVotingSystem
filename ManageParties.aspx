@@ -6,7 +6,7 @@
     <div class="card">
         <div class="search-row">
             <asp:Label ID="Label1" runat="server" Text="Enter Party Name:"></asp:Label>
-            <asp:TextBox ID="TextBox1" runat="server"></asp:TextBox>
+            <asp:TextBox ID="TextBox1" runat="server" MaxLength="200"></asp:TextBox>
             <asp:Button ID="Button1" runat="server" OnClick="Button1_Click" Text="Search" CssClass="btn" />
         </div>
     </div>
@@ -16,7 +16,17 @@
                 DataKeyNames="Email" OnRowCommand="GridView1_RowCommand" CssClass="GridViewStyle">
                 <Columns>
                     <asp:BoundField DataField="PartyID" Visible="false" />
+                    <asp:TemplateField HeaderText="Symbol">
+                        <ItemTemplate>
+                            <asp:Image ID="imgSymbol" runat="server" ImageUrl='<%# Eval("SymbolImagePath") %>' CssClass="symbol-rounded" />
+                        </ItemTemplate>
+                    </asp:TemplateField>
                     <asp:BoundField DataField="PartyName" HeaderText="Party Name" />
+                    <asp:TemplateField HeaderText="Leader Photo">
+                        <ItemTemplate>
+                            <asp:Image ID="imgLeader" runat="server" ImageUrl='<%# Eval("LeaderPhotoPath") %>' CssClass="symbol-rounded photo-rounded" />
+                        </ItemTemplate>
+                    </asp:TemplateField>
                     <asp:BoundField DataField="LeaderName" HeaderText="Leader Name" />
                     <asp:BoundField DataField="Email" HeaderText="Email" />
                     <asp:BoundField DataField="Phone" HeaderText="Phone" />
@@ -33,11 +43,6 @@
                     <asp:TemplateField HeaderText="Status">
                         <ItemTemplate>
                             <span class="status-badge"><%# Eval("Status") %></span>
-                        </ItemTemplate>
-                    </asp:TemplateField>
-                    <asp:TemplateField HeaderText="Symbol">
-                        <ItemTemplate>
-                            <asp:Image ID="imgSymbol" runat="server" ImageUrl='<%# Eval("SymbolImagePath") %>' Width="40" Height="40" Style="object-fit: contain;" />
                         </ItemTemplate>
                     </asp:TemplateField>
                     <asp:TemplateField HeaderText="Action">

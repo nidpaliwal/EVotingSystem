@@ -31,7 +31,11 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <h2 class="page-title">Cast Your Vote</h2>
     <div class="card">
-        <p><strong>Election:</strong> <asp:Label ID="lblElectionInfo" runat="server" Style="font-weight: 600;"></asp:Label></p>
+        <div class="form-grid" style="grid-template-columns: minmax(150px, 220px) 1fr; margin-bottom: 14px;">
+            <label for="ContentPlaceHolder1_ddlElection">Select Election</label>
+            <asp:DropDownList ID="ddlElection" runat="server" AutoPostBack="true" OnSelectedIndexChanged="ddlElection_SelectedIndexChanged"></asp:DropDownList>
+        </div>
+        <p style="margin-top: 0;"><strong>Election:</strong> <asp:Label ID="lblElectionInfo" runat="server" Style="font-weight: 600;"></asp:Label></p>
         <asp:Label ID="lblMessage" runat="server" CssClass="alert-error"></asp:Label>
         <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="false" CssClass="ballot-list"
             ShowHeader="false" GridLines="None">
@@ -41,6 +45,7 @@
                         <label class="ballot-card">
                             <input type="radio" name="PartyChoice" value='<%# Eval("PartyID") %>' data-partyname='<%# Eval("PartyName") %>' />
                             <img class="party-symbol" src='<%# ResolveUrl(Eval("SymbolImagePath").ToString()) %>' alt="Party symbol" />
+                            <img class="party-leader" src='<%# ResolveUrl(Eval("LeaderPhotoPath").ToString()) %>' alt="Leader photo" />
                             <span class="party-name"><%# Eval("PartyName") %></span>
                         </label>
                     </ItemTemplate>

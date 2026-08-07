@@ -94,8 +94,10 @@
     <Content Include="VoterDashboard.aspx" />
     <Content Include="VoterElectionHistory.aspx" />
     <Content Include="VoterInfoPublic.aspx" />
+    <Content Include="VoterParticipants.aspx" />
     <Content Include="VoterStatus.aspx" />
     <Content Include="VoterVote.aspx" />
+    <Content Include="VoterVoteHistory.aspx" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
@@ -305,6 +307,13 @@
     <Compile Include="VoterInfoPublic.aspx.designer.cs">
       <DependentUpon>VoterInfoPublic.aspx</DependentUpon>
     </Compile>
+    <Compile Include="VoterParticipants.aspx.cs">
+      <DependentUpon>VoterParticipants.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="VoterParticipants.aspx.designer.cs">
+      <DependentUpon>VoterParticipants.aspx</DependentUpon>
+    </Compile>
     <Compile Include="VoterStatus.aspx.cs">
       <DependentUpon>VoterStatus.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -318,6 +327,13 @@
     </Compile>
     <Compile Include="VoterVote.aspx.designer.cs">
       <DependentUpon>VoterVote.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="VoterVoteHistory.aspx.cs">
+      <DependentUpon>VoterVoteHistory.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="VoterVoteHistory.aspx.designer.cs">
+      <DependentUpon>VoterVoteHistory.aspx</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>

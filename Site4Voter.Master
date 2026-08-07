@@ -25,6 +25,8 @@
                     <asp:HyperLink ID="HyperLink1" runat="server" CssClass="nav-link" NavigateUrl="~/VoterDashboard.aspx">Dashboard</asp:HyperLink>
                     <asp:HyperLink ID="HyperLink2" runat="server" CssClass="nav-link" NavigateUrl="~/PartyListVoter.aspx">Party List</asp:HyperLink>
                     <asp:HyperLink ID="HyperLink3" runat="server" CssClass="nav-link" NavigateUrl="~/VoterVote.aspx">Vote</asp:HyperLink>
+                    <asp:HyperLink ID="HyperLink8" runat="server" CssClass="nav-link" NavigateUrl="~/VoterParticipants.aspx">Participants</asp:HyperLink>
+                    <asp:HyperLink ID="HyperLink9" runat="server" CssClass="nav-link" NavigateUrl="~/VoterVoteHistory.aspx">Vote History</asp:HyperLink>
                     <asp:HyperLink ID="HyperLink4" runat="server" CssClass="nav-link" NavigateUrl="~/VoterStatus.aspx">My Status</asp:HyperLink>
                     <asp:HyperLink ID="HyperLink7" runat="server" CssClass="nav-link" NavigateUrl="~/VoterElectionHistory.aspx">Results</asp:HyperLink>
                     <asp:HyperLink ID="HyperLink6" runat="server" CssClass="nav-link" NavigateUrl="~/Logout.aspx">Logout</asp:HyperLink>

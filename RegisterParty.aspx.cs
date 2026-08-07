@@ -6,6 +6,7 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using System.Text.RegularExpressions;
 
 namespace EVotingSystem
 {
@@ -27,6 +28,23 @@ namespace EVotingSystem
                 "alert",
                 "alert('Please fill all the fields.');",
                 true);
+                return;
+            }
+
+            // Server-side format validation (cannot be bypassed via direct POST)
+            if (string.IsNullOrWhiteSpace(TextBox6.Text))
+            {
+                ClientScript.RegisterStartupScript(this.GetType(), "alert", "alert('Password cannot be empty.');", true);
+                return;
+            }
+            if (!Regex.IsMatch(TextBox5.Text.Trim(), @"^[^@\s]+@[^@\s]+\.[^@\s]+$"))
+            {
+                ClientScript.RegisterStartupScript(this.GetType(), "alert", "alert('Please enter a valid email address.');", true);
+                return;
+            }
+            if (!Regex.IsMatch(TextBox7.Text.Trim(), @"^\d{10,15}$"))
+            {
+                ClientScript.RegisterStartupScript(this.GetType(), "alert", "alert('Phone number must contain 10 to 15 digits.');", true);
                 return;
             }
 

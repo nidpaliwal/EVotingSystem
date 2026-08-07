@@ -14,6 +14,12 @@
 
             <label for="ContentPlaceHolder1_TextBoxEnd">End Date</label>
             <asp:TextBox ID="TextBoxEnd" runat="server" TextMode="Date"></asp:TextBox>
+
+            <label for="ContentPlaceHolder1_TextBoxAuthorityName">Authority Name</label>
+            <asp:TextBox ID="TextBoxAuthorityName" runat="server" MaxLength="150"></asp:TextBox>
+
+            <label for="ContentPlaceHolder1_TextBoxAuthorityNumber">Authority No.</label>
+            <asp:TextBox ID="TextBoxAuthorityNumber" runat="server" MaxLength="50"></asp:TextBox>
         </div>
         <div class="form-actions">
             <asp:Button ID="Button1" runat="server" Text="Create Election" OnClick="Button1_Click" CssClass="btn" />
@@ -29,6 +35,8 @@
                     <asp:BoundField DataField="Title" HeaderText="Title" />
                     <asp:BoundField DataField="StartDate" HeaderText="Start Date" />
                     <asp:BoundField DataField="EndDate" HeaderText="End Date" />
+                    <asp:BoundField DataField="AuthorityName" HeaderText="Authority Name" />
+                    <asp:BoundField DataField="AuthorityNumber" HeaderText="Authority No." />
                     <asp:TemplateField HeaderText="Status">
                         <ItemTemplate>
                             <span class="status-badge"><%# (bool)Eval("IsActive") ? "Active" : "Inactive" %></span>

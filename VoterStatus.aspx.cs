@@ -29,7 +29,7 @@ namespace EVotingSystem
         private void LoadStatus()
         {
             string email = Session["Email"].ToString();
-            string s = "SELECT Name, Status, DeclineReason, HasVoted FROM Voter WHERE Email=@Email";
+            string s = "SELECT VoterID, Name, Status, DeclineReason FROM Voter WHERE Email=@Email";
             DataTable dt = obj.GetData(s, new SqlParameter("@Email", email));
 
             if (dt.Rows.Count > 0)
@@ -48,8 +48,16 @@ namespace EVotingSystem
                     trDeclineReason.Visible = false;
                 }
 
-                bool hasVoted = Convert.ToBoolean(row["HasVoted"]);
-                lblHasVoted.Text = hasVoted ? "You have already voted" : "You have not voted yet";
+                int voterId = Convert.ToInt32(row["VoterID"]);
+                string voteQuery = "SELECT COUNT(*) AS VoteCount FROM Votes WHERE VoterID=@VoterID";
+                DataTable dtVotes = obj.GetData(voteQuery, new SqlParameter("@VoterID", voterId));
+                int voteCount = dtVotes.Rows.Count > 0 ? Convert.ToInt32(dtVotes.Rows[0]["VoteCount"]) : 0;
+
+                lblHasVoted.Text = voteCount == 0
+                    ? "You have not voted in any election yet"
+                    : (voteCount == 1
+                        ? "You have voted in 1 election"
+                        : "You have voted in " + voteCount + " elections");
             }
         }
 

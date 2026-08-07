@@ -11,7 +11,7 @@ namespace EVotingSystem
     /// </summary>
     public static class LoginGuard
     {
-        public const int MaxFailures = 5;
+        public const int MaxFailures = 20;
         public const int LockoutMinutes = 15;
 
         private static string Key(string ip)

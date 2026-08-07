@@ -9,7 +9,12 @@
                 <Columns>
                     <asp:TemplateField HeaderText="Symbol">
                         <ItemTemplate>
-                            <asp:Image ID="imgSymbol" runat="server" ImageUrl='<%# Eval("SymbolImagePath") %>' Width="44" Height="44" Style="object-fit: contain;" />
+                            <asp:Image ID="imgSymbol" runat="server" ImageUrl='<%# Eval("SymbolImagePath") %>' CssClass="symbol-rounded" />
+                        </ItemTemplate>
+                    </asp:TemplateField>
+                    <asp:TemplateField HeaderText="Leader Photo">
+                        <ItemTemplate>
+                            <asp:Image ID="imgLeader" runat="server" ImageUrl='<%# Eval("LeaderPhotoPath") %>' CssClass="symbol-rounded photo-rounded" />
                         </ItemTemplate>
                     </asp:TemplateField>
                     <asp:BoundField DataField="PartyName" HeaderText="Party Name" />

@@ -34,12 +34,26 @@ namespace EVotingSystem
 
         protected void Button1_Click(object sender, EventArgs e)
         {
+            string term = TextBox1.Text;
+            if (string.IsNullOrEmpty(term)) return;
+
+            // Defensive cap: prevents oversized inputs crashing the query
+            // (SqlParameter without a size defaults to nvarchar(4000)).
+            if (term.Length > 200) term = term.Substring(0, 200);
+
             string s = "SELECT VoterID,Name,VoterIDNumber, Email, Phone, Status,PhotoPath FROM Voter where Name like @Search or VoterIDNumber like @Search";
-            DataTable dt = obj.GetData(s, new SqlParameter("@Search", "%" + TextBox1.Text + "%"));
-            if (dt != null)
+            try
             {
-                GridView1.DataSource = dt;
-                GridView1.DataBind();
+                DataTable dt = obj.GetData(s, new SqlParameter("@Search", SqlDbType.NVarChar, -1) { Value = "%" + term + "%" });
+                if (dt != null)
+                {
+                    GridView1.DataSource = dt;
+                    GridView1.DataBind();
+                }
+            }
+            catch (SqlException)
+            {
+                ClientScript.RegisterStartupScript(this.GetType(), "alert", "alert('Search failed. Please try again.');", true);
             }
         }
         protected void GridView1_RowCommand(object sender, GridViewCommandEventArgs e)
@@ -77,6 +91,14 @@ namespace EVotingSystem
             else if (e.CommandName == "Decline")
             {
                 string reason = hdnDeclineReason.Value;
+
+                // Server-side enforcement: a decline always needs a reason
+                // (client-side prompt can be bypassed with a direct POST).
+                if (string.IsNullOrWhiteSpace(reason))
+                {
+                    ClientScript.RegisterStartupScript(this.GetType(), "alert", "alert('Please provide a reason for declining.');", true);
+                    return;
+                }
 
                 string updateSql = "UPDATE Voter SET Status='Declined', DeclineReason=@Reason WHERE Email=@Email";
                 obj.SetData(updateSql,
